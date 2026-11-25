@@ -1,0 +1,4103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Dictionnary — Encyclopédie Ultime</title>
+
+  <!-- Polices : Press Start 2P (titres & badges Minecraft) + Inter (lecture fluide) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mc: {
+              bg: '#121216',
+              panel: '#1e1e24',
+              card: '#16161c',
+              border: '#33333d',
+              emerald: '#4e9f3d',
+              emeraldDark: '#2a5c20',
+              xp: '#f39c12',
+              diamond: '#00d2d3',
+              danger: '#e74c3c',
+              enchant: '#b366ff'
+            }
+          },
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'cursive', 'monospace'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* =========================================================
+       STYLES PERSONNALISÉS MINECRAFT (PIXEL ART & EFFETS 3D)
+       ========================================================= */
+    :root {
+      --bg-dark: #121216;
+      --panel-bg: #1e1e24;
+      --primary: #4e9f3d;
+      --accent: #f39c12;
+      --diamond: #00d2d3;
+      --danger: #e74c3c;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #e4e4e7;
+      background-image:
+        radial-gradient(rgba(78, 159, 61, 0.08) 1px, transparent 1px),
+        radial-gradient(rgba(243, 156, 18, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      background-position: 0 0, 14px 14px;
+      overflow-x: hidden;
+    }
+
+    /* Rendu net des images pixel-art SVG */
+    .pixel-art {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    /* Bordures 3D style bloc / inventaire Minecraft */
+    .mc-panel {
+      background: #1e1e24;
+      border: 3px solid #353542;
+      box-shadow: 0 6px 0 #0a0a0d, inset 0 2px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .mc-card {
+      background: #16161c;
+      border: 3px solid #2b2b36;
+      box-shadow: 0 5px 0 #0c0c10;
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .mc-card:hover {
+      transform: translateY(-5px);
+      border-color: #4e9f3d;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(78, 159, 61, 0.3);
+    }
+
+    /* Bouton 3D Minecraft */
+    .mc-btn {
+      box-shadow: 0 4px 0 rgba(0, 0, 0, 0.45), inset 0 2px 0 rgba(255, 255, 255, 0.18);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.18s ease;
+    }
+
+    .mc-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 rgba(0, 0, 0, 0.45), inset 0 2px 0 rgba(255, 255, 255, 0.24);
+    }
+
+    .mc-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    /* Effet scintillant pour les tags d'enchantement */
+    .enchant-pill {
+      background: linear-gradient(135deg, rgba(147, 51, 234, 0.25), rgba(88, 28, 135, 0.45));
+      border: 1px solid rgba(192, 132, 252, 0.45);
+      color: #e9d5ff;
+      box-shadow: 0 0 10px rgba(168, 85, 247, 0.18);
+    }
+
+    /* Animation d'apparition des cartes et modale */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-card {
+      animation: fadeSlideUp 0.28s ease-out both;
+    }
+
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal {
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    /* Barres de stats animées */
+    .stat-fill {
+      transition: width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Scrollbar sombre discrète */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121216;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #33333d;
+      border-radius: 6px;
+      border: 2px solid #121216;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4e9f3d;
+    }
+
+    /* Texte ombré pixel */
+    .pixel-shadow {
+      text-shadow: 3px 3px 0 #000;
+    }
+    .pixel-shadow-sm {
+      text-shadow: 2px 2px 0 #000;
+    }
+
+    /* =========================================================
+       v2 : ANIMATIONS, AUTOCOMPLÉTION & MINI-JEU
+       ========================================================= */
+
+    /* Blobs animés du header (halos flottants) */
+    @keyframes blobDrift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%      { transform: translate(18px, -14px) scale(1.15); }
+      66%      { transform: translate(-14px, 12px) scale(0.9); }
+    }
+    .animate-blob { animation: blobDrift 9s ease-in-out infinite; }
+    .animate-blob-rev { animation: blobDrift 11s ease-in-out infinite reverse; }
+
+    /* Titre du header avec dégradé animé */
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+    .text-gradient-anim {
+      background: linear-gradient(90deg, #f39c12, #ffd93d, #4e9f3d, #00d2d3, #f39c12);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 8s ease infinite;
+    }
+
+    /* Rayon de recherche qui pulse quand on clique dedans */
+    @keyframes searchPulse {
+      0%, 100% { box-shadow: 0 0 0 2px rgba(78, 159, 61, 0.35), 0 0 18px rgba(78, 159, 61, 0.25); }
+      50%      { box-shadow: 0 0 0 3px rgba(78, 159, 61, 0.55), 0 0 32px rgba(78, 159, 61, 0.45); }
+    }
+    #search-input:focus { animation: searchPulse 2s ease-in-out infinite; }
+
+    /* Liste de suggestions (style Google) */
+    .suggest-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      color: #e4e4e7;
+      font-size: 0.875rem;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.12s ease;
+      border-left: 3px solid transparent;
+    }
+    .suggest-item:hover,
+    .suggest-item.active {
+      background: #1d2b1d;
+      border-left-color: #4e9f3d;
+    }
+    .suggest-item.active { background: #16311a; }
+    .suggest-item .sg-icon {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 7px;
+      background: #20202b;
+      border: 1px solid #33333d;
+      font-size: 13px;
+    }
+    .suggest-item .sg-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .suggest-item .sg-label b { color: #f39c12; font-weight: 800; }
+    .suggest-item .sg-pill {
+      flex-shrink: 0;
+      font-size: 9px;
+      font-family: "Press Start 2P", monospace;
+      padding: 4px 7px;
+      border-radius: 6px;
+      background: #101016;
+      border: 1px solid #33333d;
+      color: #94a3b8;
+      white-space: nowrap;
+    }
+    .suggest-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 14px;
+      background: #101016;
+      border-top: 1px solid #26262f;
+      color: #6b7280;
+      font-size: 11px;
+    }
+    .suggest-footer kbd {
+      font-family: "Press Start 2P", monospace;
+      font-size: 8px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: #1d1d26;
+      border: 1px solid #33333d;
+    }
+    @keyframes suggestIn {
+      from { opacity: 0; transform: translateY(-6px) scale(0.985); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #search-suggest:not(.hidden) { animation: suggestIn 0.16s ease-out; }
+
+    /* Effet "shine" sur les cartes au survol */
+    .mc-card { position: relative; }
+    .mc-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(105deg, transparent, rgba(255,255,255,0.16), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.6s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .mc-card:hover::after { left: 130%; }
+
+    /* Pop-in des overlays du jeu */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.82); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .animate-pop { animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+    /* Canvas du jeu + hotbar */
+    #game-canvas { image-rendering: pixelated; display: block; width: 100%; height: auto; touch-action: none; }
+    .hotbar-slot {
+      width: 46px; height: 46px;
+      border-radius: 9px;
+      border: 2px solid #33333d;
+      background: #14141b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+      box-shadow: 0 3px 0 #0a0a0d;
+      position: relative;
+    }
+    .hotbar-slot:hover { transform: translateY(-3px); border-color: #4e9f3d; }
+    .hotbar-slot.active { border-color: #f39c12; box-shadow: 0 0 12px rgba(243, 156, 18, 0.45); transform: translateY(-3px); }
+    .hotbar-slot .swatch { width: 20px; height: 20px; border-radius: 4px; box-shadow: inset -3px -3px 0 rgba(0,0,0,0.35), inset 3px 3px 0 rgba(255,255,255,0.25); }
+    .hotbar-slot .count { font-size: 9px; font-weight: 800; color: #e5e7eb; margin-top: 2px; }
+    .hotbar-slot .key {
+      position: absolute; top: -7px; left: -6px;
+      font-size: 8px; font-family: "Press Start 2P", monospace;
+      background: #262632; border: 1px solid #3a3a4a;
+      padding: 1px 4px; border-radius: 4px; color: #9ca3af;
+    }
+    .hotbar-slot.empty .swatch { opacity: 0.18; }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-mc-emerald selection:text-white">
+
+  <!-- Lien d'accessibilité -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-mc-xp focus:text-black focus:px-4 focus:py-2 focus:rounded-lg focus:font-pixel focus:text-xs">
+    Aller au contenu principal
+  </a>
+
+  <!-- =========================================================
+       EN-TÊTE PRINCIPAL
+       ========================================================= -->
+  <header class="w-full max-w-7xl mx-auto px-4 pt-5 pb-3">
+    <div class="relative overflow-hidden rounded-2xl border-4 border-[#415a77] bg-gradient-to-br from-[#1b263b] via-[#131d2f] to-[#0d1421] p-5 sm:p-7 shadow-[0_8px_0_#090e17]">
+      <!-- Décoration pixel en arrière-plan -->
+      <div class="animate-blob pointer-events-none absolute -right-8 -top-8 w-40 h-40 rounded-full bg-mc-emerald/10 blur-2xl"></div>
+      <div class="animate-blob-rev pointer-events-none absolute -left-8 -bottom-8 w-40 h-40 rounded-full bg-mc-xp/10 blur-2xl"></div>
+
+      <div class="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-black/40 border border-mc-emerald/40 mb-3">
+            <span class="w-2.5 h-2.5 rounded-sm bg-mc-emerald animate-pulse"></span>
+            <span class="font-pixel text-[10px] text-mc-emerald tracking-wide">ÉDITION SURVIE 1.21+</span>
+          </div>
+          <h1 class="font-pixel text-xl sm:text-3xl md:text-4xl text-gradient-anim pixel-shadow leading-snug">
+            MINECRAFT DICTIONNARY
+          </h1>
+          <p class="text-slate-300 text-sm sm:text-base mt-2.5 max-w-2xl leading-relaxed">
+            L'encyclopédie interactive ultime : explore les <strong class="text-white">mobs</strong>, les <strong class="text-white">mondes &amp; biomes</strong> et les <strong class="text-white">armes</strong> avec leurs statistiques, forces, faiblesses, butins et astuces de survie.
+          </p>
+        </div>
+
+        <!-- Compteurs rapides & bouton favoris global -->
+        <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+          <div class="px-3.5 py-2.5 rounded-xl bg-black/40 border-2 border-white/10 text-center min-w-[92px]">
+            <div class="font-pixel text-sm text-mc-diamond" id="total-entries-stat">31</div>
+            <div class="text-[11px] text-slate-400 font-medium mt-0.5">Fiches</div>
+          </div>
+          <button
+            id="header-fav-toggle"
+            type="button"
+            class="mc-btn px-4 py-2.5 rounded-xl bg-[#272733] hover:bg-[#323244] border-2 border-mc-xp/50 text-left flex items-center gap-2.5 cursor-pointer"
+            title="Afficher mes favoris dans cette catégorie"
+          >
+            <span class="text-lg leading-none">⭐</span>
+            <div>
+              <div class="font-pixel text-xs text-mc-xp" id="global-fav-count">0</div>
+              <div class="text-[11px] text-slate-300 font-medium">Favoris</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       BARRE STICKY : RECHERCHE INTELLIGENTE + NAVIGATION 3 PAGES
+       ========================================================= -->
+  <div class="sticky top-0 z-30 w-full backdrop-blur-md bg-mc-bg/90 border-b-2 border-[#262630] py-3">
+    <div class="max-w-7xl mx-auto px-4 space-y-3">
+
+      <!-- Barre de recherche style Minecraft -->
+      <div class="relative flex items-center">
+        <div class="pointer-events-none absolute left-3.5 text-slate-400 flex items-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+          </svg>
+        </div>
+
+        <input
+          id="search-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Rechercher un mob, monde, arme, faiblesse, butin ou enchantement (ex: Warden, Trident, lave, Smite)..."
+          aria-label="Rechercher dans le dictionnaire Minecraft"
+          class="w-full pl-11 pr-24 py-3 sm:py-3.5 rounded-xl bg-[#16161d] border-2 border-[#393949] focus:border-mc-emerald focus:outline-none focus:ring-2 focus:ring-mc-emerald/30 text-sm sm:text-base text-white placeholder-slate-400 shadow-inner transition"
+        >
+
+        <div class="absolute right-2.5 flex items-center gap-1.5">
+          <span class="hidden md:inline-block px-2 py-1 rounded-md bg-[#262632] border border-[#3a3a4a] text-[10px] font-pixel text-slate-400">/</span>
+          <button
+            id="clear-search-btn"
+            type="button"
+            class="hidden px-2.5 py-1.5 rounded-lg bg-mc-danger/20 hover:bg-mc-danger/35 text-mc-danger border border-mc-danger/40 text-xs font-semibold cursor-pointer transition"
+            aria-label="Effacer la recherche"
+          >
+            ✕ Effacer
+          </button>
+        </div>
+
+        <!-- Suggestions de recherche type Google -->
+        <div id="search-suggest" class="hidden absolute top-[110%] left-0 right-0 z-40 rounded-xl bg-[#15151d] border-2 border-mc-emerald/40 shadow-[0_18px_45px_rgba(0,0,0,0.65)] overflow-hidden"></div>
+      </div>
+
+      <!-- Navigation principale : 3 Pages SPA -->
+      <nav aria-label="Navigation principale par catégorie" class="grid grid-cols-3 gap-2 sm:gap-3" role="tablist">
+        <button
+          type="button"
+          role="tab"
+          data-page="mobs"
+          aria-selected="true"
+          class="nav-tab mc-btn flex items-center justify-center sm:justify-between gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border-2 font-pixel text-[10px] sm:text-xs cursor-pointer"
+        >
+          <span class="flex items-center gap-1.5 sm:gap-2 truncate">
+            <span class="text-sm sm:text-base">⚔️</span>
+            <span class="truncate">Mobs</span>
+          </span>
+          <span class="tab-count px-2 py-0.5 rounded-md text-[10px] font-sans font-bold" data-count-for="mobs">12</span>
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          data-page="worlds"
+          aria-selected="false"
+          class="nav-tab mc-btn flex items-center justify-center sm:justify-between gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border-2 font-pixel text-[10px] sm:text-xs cursor-pointer"
+        >
+          <span class="flex items-center gap-1.5 sm:gap-2 truncate">
+            <span class="text-sm sm:text-base">🌍</span>
+            <span class="truncate">Mondes</span>
+          </span>
+          <span class="tab-count px-2 py-0.5 rounded-md text-[10px] font-sans font-bold" data-count-for="worlds">9</span>
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          data-page="weapons"
+          aria-selected="false"
+          class="nav-tab mc-btn flex items-center justify-center sm:justify-between gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border-2 font-pixel text-[10px] sm:text-xs cursor-pointer"
+        >
+          <span class="flex items-center gap-1.5 sm:gap-2 truncate">
+            <span class="text-sm sm:text-base">🗡️</span>
+            <span class="truncate">Armes</span>
+          </span>
+          <span class="tab-count px-2 py-0.5 rounded-md text-[10px] font-sans font-bold" data-count-for="weapons">10</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       CONTENU PRINCIPAL (SPA 3 PAGES)
+       ========================================================= -->
+  <main id="main-content" class="flex-1 w-full max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- Bannière intelligente de résultats dans d'autres pages -->
+    <div id="cross-search-banner" class="hidden rounded-xl bg-[#1a2232] border-2 border-mc-diamond/40 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5 text-sm text-slate-200">
+        <span class="text-lg">🔎</span>
+        <span id="cross-search-text">Résultats également trouvés dans d'autres catégories :</span>
+      </div>
+      <div id="cross-search-buttons" class="flex flex-wrap items-center gap-2"></div>
+    </div>
+
+    <!-- En-tête de section dynamique + Sous-filtres -->
+    <section id="list-header-section" class="mc-panel rounded-2xl p-4 sm:p-6">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-5">
+        <div>
+          <h2 id="page-title" class="font-pixel text-lg sm:text-xl text-mc-emerald pixel-shadow-sm">
+            ⚔️ Les Mobs
+          </h2>
+          <p id="page-subtitle" class="text-slate-400 text-sm mt-1.5">
+            Créatures pacifiques, neutres, hostiles et boss légendaires : apprends leurs faiblesses pour survivre.
+          </p>
+        </div>
+        <div class="text-xs sm:text-sm text-slate-400 font-medium bg-[#14141a] px-3.5 py-2 rounded-xl border border-[#2d2d39] self-start md:self-auto">
+          Affichage : <strong id="visible-count" class="text-mc-xp">12</strong> <span id="visible-label">fiches</span>
+        </div>
+      </div>
+
+      <!-- Barre de sous-filtres -->
+      <div id="subfilter-bar" class="flex flex-wrap items-center gap-2" role="group" aria-label="Sous-filtres"></div>
+    </section>
+
+    <!-- Générateur aléatoire de Biome (Visible uniquement sur la page Mondes) -->
+    <section id="biome-generator-section" class="hidden mc-panel rounded-2xl p-5 sm:p-6 border-mc-emerald/40 relative overflow-hidden">
+      <div class="flex flex-col lg:flex-row items-center gap-6">
+        <div class="flex-1 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-mc-emerald/15 border border-mc-emerald/40 text-mc-emerald font-pixel text-[10px] mb-2.5">
+            🎲 OUTIL D'EXPLORATION
+          </div>
+          <h3 class="font-pixel text-sm sm:text-base text-mc-xp pixel-shadow-sm">
+            Explorateur Aléatoire de Biomes
+          </h3>
+          <p class="text-slate-300 text-sm mt-2 max-w-xl">
+            Tu ne sais pas où partir en expédition aujourd'hui ? Lance le générateur pour tirer un biome ou une dimension aléatoire avec un défi de survie !
+          </p>
+          <div class="mt-4 flex flex-wrap justify-center lg:justify-start gap-3">
+            <button
+              id="biome-btn"
+              type="button"
+              class="mc-btn px-5 py-3 rounded-xl bg-mc-emerald hover:bg-[#5fb94d] text-white font-pixel text-[11px] cursor-pointer"
+            >
+              🌍 Générer un biome aléatoire
+            </button>
+            <button
+              id="biome-open-fiche-btn"
+              type="button"
+              class="hidden mc-btn px-4 py-3 rounded-xl bg-[#272736] hover:bg-[#343448] border-2 border-mc-diamond/50 text-mc-diamond font-pixel text-[10px] cursor-pointer"
+            >
+              📖 Voir la fiche
+            </button>
+          </div>
+        </div>
+
+        <!-- Résultat visuel du biome tiré -->
+        <div id="biome-result-card" class="w-full lg:w-[420px] rounded-xl bg-[#131319] border-2 border-dashed border-[#415a77] p-4 flex items-center gap-4 min-h-[118px] transition-all">
+          <div id="biome-preview-wrap" class="w-20 h-20 rounded-xl bg-[#1c1c26] border-2 border-[#323242] flex items-center justify-center shrink-0 overflow-hidden">
+            <span class="text-3xl">🧭</span>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div id="biome-result-title" class="font-pixel text-xs text-mc-xp leading-relaxed">
+              Prêt pour l'aventure ?
+            </div>
+            <p id="biome-result-mission" class="text-xs sm:text-sm text-slate-300 mt-1.5 leading-snug">
+              Clique sur le bouton pour découvrir ta prochaine destination cubique.
+            </p>
+            <div id="biome-result-meta" class="text-[11px] text-mc-diamond font-semibold mt-1.5 hidden"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grille des cartes -->
+    <section id="cards-section" aria-live="polite">
+      <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+      <!-- État vide (aucun résultat) -->
+      <div id="empty-state" class="hidden mc-panel rounded-2xl p-8 sm:p-12 text-center">
+        <div class="text-5xl mb-4">🧭</div>
+        <h3 class="font-pixel text-sm sm:text-base text-mc-xp mb-2">Aucune fiche trouvée</h3>
+        <p id="empty-state-msg" class="text-slate-400 text-sm max-w-md mx-auto mb-5">
+          Essaie un autre mot-clé ou réinitialise les filtres actifs.
+        </p>
+        <div id="empty-state-actions" class="flex flex-wrap justify-center gap-3"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       PIED DE PAGE
+       ========================================================= -->
+  <footer class="w-full border-t-2 border-[#23232d] bg-[#141419] mt-10">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+      <p class="font-pixel text-[10px] text-slate-300">
+        Minecraft Dictionnary © 2026 • Guide de Survie
+      </p>
+      <p class="text-center sm:text-right">
+        Illustrations pixel-art générées en SVG • Cliquez sur une fiche pour tout savoir (faiblesses, stats &amp; astuces).
+      </p>
+    </div>
+  </footer>
+
+  <!-- =========================================================
+       MODALE DÉTAILLÉE STYLE INVENTAIRE MINECRAFT
+       ========================================================= -->
+  <div
+    id="detail-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+  >
+    <div
+      id="modal-dialog"
+      class="animate-modal relative w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-2xl bg-[#1b1b22] border-4 border-[#434354] shadow-[0_14px_40px_rgba(0,0,0,0.85)]"
+    >
+      <!-- Barre supérieure de la modale -->
+      <div class="sticky top-0 z-10 flex items-center justify-between gap-3 px-4 sm:px-6 py-3.5 bg-[#15151b]/95 backdrop-blur border-b-2 border-[#2d2d3a]">
+        <div class="flex items-center gap-2 min-w-0">
+          <span id="modal-category-pill" class="px-2.5 py-1 rounded-md font-pixel text-[9px] uppercase"></span>
+          <span id="modal-sub-pill" class="px-2.5 py-1 rounded-md bg-[#262634] text-slate-300 text-xs font-semibold truncate"></span>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button
+            id="modal-fav-btn"
+            type="button"
+            class="mc-btn px-3 py-1.5 rounded-lg bg-[#252532] hover:bg-[#323244] border border-[#3e3e52] text-sm font-semibold cursor-pointer flex items-center gap-1.5"
+            title="Ajouter ou retirer des favoris"
+          >
+            <span id="modal-fav-icon">☆</span>
+            <span class="hidden sm:inline text-xs" id="modal-fav-text">Favori</span>
+          </button>
+          <button
+            id="modal-copy-btn"
+            type="button"
+            class="mc-btn px-3 py-1.5 rounded-lg bg-[#252532] hover:bg-[#323244] border border-[#3e3e52] text-xs font-semibold text-mc-diamond cursor-pointer"
+            title="Copier le résumé de la fiche"
+          >
+            📋 Copier
+          </button>
+          <button
+            id="modal-close-btn"
+            type="button"
+            class="mc-btn w-9 h-9 rounded-lg bg-mc-danger/20 hover:bg-mc-danger text-mc-danger hover:text-white border border-mc-danger/40 font-bold text-base flex items-center justify-center cursor-pointer"
+            aria-label="Fermer la fiche"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Corps dynamique de la modale -->
+      <div id="modal-body" class="p-4 sm:p-6 space-y-5"></div>
+    </div>
+  </div>
+
+  <!-- Toast discret (remplace alert) -->
+  <div
+    id="toast"
+    class="fixed bottom-5 right-5 z-50 pointer-events-none opacity-0 translate-y-3 transition-all duration-300 px-4 py-3 rounded-xl bg-[#18281c] border-2 border-mc-emerald text-white text-xs sm:text-sm font-semibold shadow-xl flex items-center gap-2"
+    role="status"
+    aria-live="polite"
+  >
+    <span>✅</span>
+    <span id="toast-message">Action effectuée</span>
+  </div>
+
+  <!-- =========================================================
+       JAVASCRIPT COMPLET : PIXEL-ART SVG, BASE DE DONNÉES & SPA
+       ========================================================= -->
+  <script>
+    (() => {
+      'use strict';
+
+      /* =====================================================================
+         1. MOTEUR PIXEL-ART SVG (31 ILLUSTRATIONS UNIQUES 16x16 SUR FOND THÉMATIQUE)
+         Génère des Data URI SVG UTF-8 (sans base64) avec rendu pixel-art net.
+         ===================================================================== */
+
+      /**
+       * Convertit une grille ASCII 16x16 + palette de couleurs en Data URI SVG pixel-art.
+       * @param {string[]} grid - Tableau de 16 chaînes de 16 caractères ('.' = transparent).
+       * @param {Object.<string, string>} palette - Correspondance caractère -> couleur hex.
+       * @param {Object} theme - Couleurs du dégradé de fond et bordure lumineuse.
+       * @returns {string} Data URI `data:image/svg+xml;charset=utf-8,...`
+       */
+      function createPixelArtURI(grid, palette, theme) {
+        const bgTop = theme.bgTop || '#1a2433';
+        const bgBottom = theme.bgBottom || '#0f141e';
+        const glow = theme.glow || '#4e9f3d';
+        const fullBleed = Boolean(theme.fullBleed);
+
+        let rects = '';
+        const size = grid.length; // 16
+
+        for (let y = 0; y < size; y++) {
+          const row = grid[y];
+          for (let x = 0; x < row.length; x++) {
+            const ch = row[x];
+            if (ch !== '.' && ch !== ' ' && palette[ch]) {
+              if (fullBleed) {
+                // Paysages (Mondes/Biomes) : occupent toute la toile 16x16
+                rects += `<rect x="${x}" y="${y}" width="1" height="1" fill="${palette[ch]}"/>`;
+              } else {
+                // Mobs & Armes : centrés dans un cadre 20x20 (marge 2px autour)
+                rects += `<rect x="${x + 2}" y="${y + 2}" width="1" height="1" fill="${palette[ch]}"/>`;
+              }
+            }
+          }
+        }
+
+        if (fullBleed) {
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">${rects}</svg>`;
+          return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+        }
+
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" shape-rendering="crispEdges">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="${bgTop}"/>
+              <stop offset="100%" stop-color="${bgBottom}"/>
+            </linearGradient>
+          </defs>
+          <rect width="20" height="20" fill="url(#g)"/>
+          <rect x="0" y="0" width="20" height="1" fill="${glow}" fill-opacity="0.16"/>
+          <rect x="0" y="19" width="20" height="1" fill="#000" fill-opacity="0.35"/>
+          <rect x="2" y="18" width="16" height="1" fill="#000" fill-opacity="0.25"/>
+          ${rects}
+        </svg>`;
+        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      }
+
+      /* Définitions pixel-art 16x16 pour chaque Mob, Monde et Arme */
+      const PIXEL_ART_DEFS = {
+        /* ------------------- MOBS (12) ------------------- */
+        creeper: {
+          theme: { bgTop: '#16331b', bgBottom: '#0b190d', glow: '#4e9f3d' },
+          palette: { g: '#4da83b', l: '#75cc5c', d: '#2d6e22', k: '#0c0f0c', m: '#3c8c2e' },
+          grid: [
+            '....gggggggg....',
+            '...glggmgglgg...',
+            '...gmmggggmmg...',
+            '...ggkkggkkgg...',
+            '...ggkkggkkgg...',
+            '...gmggkkggmg...',
+            '...ggdkkkkddg...',
+            '...ggdkkkkddg...',
+            '...ggdkggkdgg...',
+            '....gmmddmmg....',
+            '.....gmmmmg.....',
+            '....dglgglgd....',
+            '....dgmggmgd....',
+            '....dglgglgd....',
+            '...ggddggddgg...',
+            '...dkkddddkkd...'
+          ]
+        },
+        enderman: {
+          theme: { bgTop: '#241236', bgBottom: '#0d0714', glow: '#c084fc' },
+          palette: { b: '#15151a', s: '#24242e', p: '#d946ef', w: '#f5d0fe', v: '#9333ea' },
+          grid: [
+            '..v.............',
+            '....bbbbbbbb....',
+            '....bssssssb....',
+            '....bbbbbbbb....',
+            '....bpwbbwpb....',
+            '....bbbbbbbb....',
+            '....bsbbbbbb....',
+            '.....bbbbbb....v',
+            '....bbbbbbbb....',
+            '...bb.bbbb.bb...',
+            '..bb..bsbb..bb..',
+            '..bb..bbbb..bb..',
+            '.vbb..bbbb..bb..',
+            '..bb..b..b..bb..',
+            '......b..b......',
+            '......b..b....v.'
+          ]
+        },
+        zombie: {
+          theme: { bgTop: '#172924', bgBottom: '#0b1412', glow: '#52b788' },
+          palette: { h: '#2b5222', g: '#5a8f49', l: '#72a85f', d: '#3d6931', k: '#111912', c: '#2aa198', t: '#1e736c' },
+          grid: [
+            '....hhhhhhhh....',
+            '...hhgggggghh...',
+            '...hglgggglgh...',
+            '...gggggggggg...',
+            '...ggkkggkkgg...',
+            '...ggggddgggg...',
+            '...ggddkkddgg...',
+            '....gggggggg....',
+            '..cccccccccccc..',
+            '..ctccccccccct..',
+            '..ggccccccccgg..',
+            '..ggccctttccgg..',
+            '....cccccccc....',
+            '....tttttttt....',
+            '....ttt..ttt....',
+            '....ddd..ddd....'
+          ]
+        },
+        skeleton: {
+          theme: { bgTop: '#262933', bgBottom: '#111217', glow: '#cbd5e1' },
+          palette: { w: '#e5e7eb', s: '#cbd5e1', g: '#94a3b8', k: '#18181b', b: '#78350f', f: '#d6d3d1' },
+          grid: [
+            '....wwwwwwww....',
+            '...wswwwwwwsw...',
+            '...wwwwwwwwww...',
+            '...wwkkwwkkww...',
+            '...wwkkwwkkww...',
+            '...wwwwggwwww...',
+            '...wwkkkkkkww...',
+            '....wswswsws....',
+            '......gwwg..b...',
+            '...sswwwwww.bf..',
+            '..ss..gwwg..b.f.',
+            '..s...wwww..bf..',
+            '......gwwg..b...',
+            '......w..w......',
+            '.....ww..ww.....',
+            '.....gg..gg.....'
+          ]
+        },
+        blaze: {
+          theme: { bgTop: '#3b1708', bgBottom: '#160702', glow: '#f97316' },
+          palette: { y: '#fde047', o: '#f97316', r: '#dc2626', d: '#9a3412', k: '#1c1917', w: '#fef9c3' },
+          grid: [
+            '..o..........y..',
+            '....yyyyyyyy....',
+            '..r.ywwyywwy.o..',
+            '....yyyyyyyy....',
+            '.y..ykkyykky..r.',
+            '.o..yooddooy..o.',
+            '.r...yooooy...y.',
+            '.o....dddd....o.',
+            '....y..oo..y....',
+            '..y.o.r..r.o.y..',
+            '..o.r.o..o.r.o..',
+            '..r.d.y..y.d.r..',
+            '....o..oo..o....',
+            '...r..y..y..r...',
+            '......o..o......',
+            '.....r....r.....'
+          ]
+        },
+        warden: {
+          theme: { bgTop: '#082026', bgBottom: '#030b0f', glow: '#22d3ee' },
+          palette: { d: '#0f2b36', t: '#154d59', c: '#22d3ee', l: '#67e8f9', b: '#e2e8f0', k: '#040c10' },
+          grid: [
+            '.c............c.',
+            '.tc..t....t..ct.',
+            '..ctddddddddtc..',
+            '...tdttttttdt...',
+            '..cdddddddddd..c',
+            '...ddkkkkkkdd...',
+            '...ddkllllkdd...',
+            '....dddddddd....',
+            '..bbddddddddbb..',
+            '.bdddtcccctdddb.',
+            '.bddtcllllctddb.',
+            '.bdddtdccdtdddb.',
+            '..dddtdccdtddd..',
+            '...ddtddddtdd...',
+            '...ddd....ddd...',
+            '...ttt....ttt...'
+          ]
+        },
+        ender_dragon: {
+          theme: { bgTop: '#260e38', bgBottom: '#0b0512', glow: '#d946ef' },
+          palette: { k: '#141419', d: '#23232e', g: '#3b3b4d', m: '#d946ef', l: '#f0abfc', s: '#525266' },
+          grid: [
+            '..s..........s..',
+            '..gs........sg..',
+            '...gk.gggg.kg...',
+            '...kkkkkkkkkk...',
+            '..kdkkkkkkkkdk..',
+            '..kkmldkkdlmkk..',
+            '..kkkkkkkkkkkk..',
+            '...kkddddddkk...',
+            '...kkkddddkkk...',
+            '....kkggggkk....',
+            '...kdkkkkkkdk...',
+            '..kddkkmmkkddk..',
+            '...kkkkkkkkkk...',
+            '....k..kk..k....',
+            '...m........m...',
+            '................'
+          ]
+        },
+        wither: {
+          theme: { bgTop: '#1e1b24', bgBottom: '#09080c', glow: '#94a3b8' },
+          palette: { k: '#1c1b22', d: '#2e2c38', g: '#4b485c', w: '#f8fafc', s: '#94a3b8' },
+          grid: [
+            '................',
+            '.....kkkkkk.....',
+            '.kkk.kddddk.kkk.',
+            'kddk.kwkkwk.kddk',
+            'kwkk.kddddk.kkwk',
+            'kddk.kggggk.kddk',
+            '.kkk.kkkkkk.kkk.',
+            '....kkkkkkkk....',
+            '...kkggggggkk...',
+            '....kkddddkk....',
+            '....kkggggkk....',
+            '.....kkddkk.....',
+            '.....kkggkk.....',
+            '......kkkk......',
+            '.......kk.......',
+            '.......ss.......'
+          ]
+        },
+        ghast: {
+          theme: { bgTop: '#331217', bgBottom: '#140609', glow: '#f8fafc' },
+          palette: { w: '#f8fafc', s: '#e2e8f0', g: '#94a3b8', k: '#1e1b22', r: '#7f1d1d', t: '#bae6fd' },
+          grid: [
+            '..wwwwwwwwwwww..',
+            '.wswwwwwwwwwwsw.',
+            '.wwwwwwwwwwwwww.',
+            '.wwgwwwwwwwwgww.',
+            '.wwkkwwwwwwkkww.',
+            '.wwktwwwwwwtkww.',
+            '.wwwtwwwwwwtwww.',
+            '.wwwwwrrrrwwwww.',
+            '.wwwwwrkkwwwwww.',
+            '.wswwwwrrwwwwsw.',
+            '..ssssssssssss..',
+            '..sw.ss..ss.ws..',
+            '..sw.sw..ws.ws..',
+            '..s..sw..ws..s..',
+            '.....s....s.....',
+            '................'
+          ]
+        },
+        piglin_brute: {
+          theme: { bgTop: '#381e12', bgBottom: '#160a06', glow: '#f59e0b' },
+          palette: { p: '#e2a37a', d: '#b87650', k: '#1c1917', w: '#ffffff', g: '#facc15', o: '#ca8a04', t: '#3f3f46' },
+          grid: [
+            '...dddddddddd...',
+            '..dppppppppppd..',
+            '.ddpkkkkkkkkpdd.',
+            '.dppkwwppwwkppd.',
+            '..pppppddppppp..',
+            '..pppwddddwppp..',
+            '...ppddddddpp...',
+            '....dddddddd....',
+            '..tttttttttttt..',
+            '..tgttttttttgt..',
+            '..ggtttootttgg..',
+            '..ppggttttggpp..',
+            '....tttttttt....',
+            '....ttt..ttt....',
+            '....ddd..ddd....',
+            '................'
+          ]
+        },
+        iron_golem: {
+          theme: { bgTop: '#242d26', bgBottom: '#101412', glow: '#a3e635' },
+          palette: { w: '#e4e4e7', s: '#cbd5e1', g: '#94a3b8', d: '#64748b', r: '#ef4444', v: '#4d7c0f', l: '#84cc16' },
+          grid: [
+            '....wwwwwwww....',
+            '...wsvlwwwwsw...',
+            '...wddddddddw...',
+            '...wkrgwwgrkw...',
+            '...wwwwsswwww...',
+            '...wwwwsswwww...',
+            '...wwggssggww...',
+            '.vvwwwwwwwwwwss.',
+            '.vlwwwwwwwwwwww.',
+            '.wwgwwvllvwwgww.',
+            '.wwwggvvvvggwww.',
+            '.wwswwwwwwwwsww.',
+            '..ss.wwwwww.ss..',
+            '.....ww..ww.....',
+            '.....ss..ss.....',
+            '.....gg..gg.....'
+          ]
+        },
+        axolotl: {
+          theme: { bgTop: '#13313d', bgBottom: '#08171f', glow: '#f472b6' },
+          palette: { p: '#f9a8d4', l: '#fbcfe8', m: '#ec4899', d: '#db2777', k: '#1f2937', b: '#38bdf8' },
+          grid: [
+            '................',
+            '.m............m.',
+            '..md..pppp..dm..',
+            '.mmdppppppppdmm.',
+            '..mdplllllpldm..',
+            '.mmdpkpllpkkdmm.',
+            '..mdplllllpldm..',
+            '...dppmmmmppd...',
+            '....pppppppp....',
+            '...dpllllllpdd..',
+            '..ppplllllplpp..',
+            '...dppppppppd...',
+            '....pp....pp....',
+            '....mm....mm....',
+            '..b..........b..',
+            '................'
+          ]
+        },
+
+        /* ------------------- MONDES & BIOMES (9, plein cadre 16x16) ------------------- */
+        overworld: {
+          theme: { fullBleed: true },
+          palette: { s: '#60a5fa', a: '#93c5fd', y: '#fde047', w: '#f8fafc', l: '#22c55e', f: '#15803d', t: '#78350f', g: '#4e9f3d', d: '#854d0e', r: '#64748b', c: '#22d3ee' },
+          grid: [
+            'ssyyssssssssssss',
+            'ssyyssswwwssssss',
+            'sssssswwwwwsssss',
+            'aaaaaaaaaaaafffa',
+            'aaaaaaaaaaaflllf',
+            'aaaaaaaaaaaflllf',
+            'aaaaaaaaaaaafffa',
+            'aaaaaaaaaaaaataa',
+            'aaaaaaaaaaaaataa',
+            'gggggggggggggggg',
+            'gddddgddddgddddg',
+            'dddddddddddddddd',
+            'ddrrdddrddddrrdd',
+            'rrrrrrrrrrrrrrrr',
+            'rrrrcrrrrrrrcrrr',
+            'rrrrrrrrrrrrrrrr'
+          ]
+        },
+        nether: {
+          theme: { fullBleed: true },
+          palette: { k: '#2b0909', r: '#4c0f0f', n: '#7f1d1d', b: '#991b1b', o: '#f97316', y: '#facc15', w: '#fef08a', g: '#450a0a' },
+          grid: [
+            'nnnnngnnnnnnnnnn',
+            'nnrrkkrnnnrkknnn',
+            'nrrrrkkrrrkkrrrn',
+            'rrrrrrrrrrrrrrrr',
+            'rrrkrrrrrrrrkrrr',
+            'rkkkkrrrrrrkkkkr',
+            'rrkrrrrnnrrrrkrr',
+            'rrrrrrnnnnrrrrrr',
+            'nnrrnnnnnnnnrrnn',
+            'nnnnnbbnnbbnnnnn',
+            'nnbbbooyyoobbbnn',
+            'nbooyywwwwyyoobn',
+            'ooyywwyyyywwyyoo',
+            'oyyyooyyyyoooyyo',
+            'ooyyooyyyyooyyoo',
+            'oooooooooooooooo'
+          ]
+        },
+        end_world: {
+          theme: { fullBleed: true },
+          palette: { v: '#0d0617', p: '#1e1033', s: '#581c87', k: '#111118', o: '#262636', m: '#e879f9', w: '#fae8ff', e: '#e5e0a8', d: '#c9c17f' },
+          grid: [
+            'vvvsvvvvvvvpvvvv',
+            'vpvvvmvvvvvvvsvv',
+            'vvvvmwmvmvvvvvvv',
+            'vvvvkokvkokvvvvv',
+            'vvvvkkkvkkkvvvvv',
+            'vvpvkkkvkkkvvpvv',
+            'vvvvkkkvkkkvvvvv',
+            'vvvvkokvkokvvvvv',
+            'vvveeeeeeeeeevvv',
+            'vveedeeeeeeedevv',
+            'vveeeeeeeeeeeevv',
+            'vvvdddeeeedddvvv',
+            'vvvvvddddddvvvvv',
+            'vvvvvvvddvvvvvvv',
+            'vpvvvvvvvvvvvspv',
+            'vvvvvvsvvvvvvvvv'
+          ]
+        },
+        deep_dark: {
+          theme: { fullBleed: true },
+          palette: { k: '#04090d', d: '#0d1b24', s: '#1e293b', g: '#334155', t: '#0f4c5c', c: '#06b6d4', l: '#67e8f9', w: '#e0f2fe' },
+          grid: [
+            'dddddddddddddddd',
+            'ddggddddddddggdd',
+            'ddgsddddddddsgdd',
+            'ddgsddkkkkddsggd',
+            'ddgsdkkkkkkdsgdd',
+            'ddgsdkkwwkkdsgdd',
+            'ddgsdkkcckkdsgdd',
+            'ddggddkkkkddggdd',
+            'dttddddkkddddttd',
+            'ttctttddddtttctt',
+            'ttttllttttlltttt',
+            'tcttctttttttctct',
+            'ttttttclcttttttt',
+            'ddtttttctttttddd',
+            'dddttcttttctdddd',
+            'dddddddddddddddd'
+          ]
+        },
+        mushroom_island: {
+          theme: { fullBleed: true },
+          palette: { s: '#60a5fa', a: '#93c5fd', r: '#dc2626', w: '#f8fafc', t: '#e7e5e4', b: '#92400e', m: '#7e6c88', p: '#5c4d66', o: '#1d4ed8', l: '#2563eb' },
+          grid: [
+            'ssssssssssssssss',
+            'sssssrrrrrrsssss',
+            'aaaaarrwwrraaaaa',
+            'aaaarrrrrrrraaaa',
+            'aaaarwrrrrwraaaa',
+            'aaaarrrrrrrraaaa',
+            'aaaaaaaattaaaaaa',
+            'aaaaaaaattaaaaaa',
+            'aaabbbaattaaaaaa',
+            'aaaabaaattaaaaaa',
+            'oolmmmmmmmmmmloo',
+            'olmmpmmmmmpmmmlo',
+            'oommmmmmmmmmmmoo',
+            'oollppmmmmppploo',
+            'oooooooooooooooo',
+            'oolooolllloooloo'
+          ]
+        },
+        crimson_forest: {
+          theme: { fullBleed: true },
+          palette: { k: '#2e080d', f: '#4a0d16', r: '#9f1239', b: '#be123c', l: '#fbbf24', s: '#6b1839', p: '#4c1129', n: '#881337' },
+          grid: [
+            'kkrrbrrkkrrbrrkk',
+            'krbbbbbrrbbbbbrk',
+            'rbbblbbbbrbllbrr',
+            'rbbbbbbbrbbbbbbr',
+            'ffrrbrrfffrrbrff',
+            'ffffsfffffffsfff',
+            'ffffpfffffffsfff',
+            'ffffsfffffffsfff',
+            'ffkfsffkkfffsfkf',
+            'ffffpfffffffsfff',
+            'bbbbbbbbbbbbbbbb',
+            'bnnnbnnnnbnnnbnn',
+            'nnnnnnnnnnnnnnnn',
+            'nnppnnnnnnppnnnn',
+            'pppppppppppppppp',
+            'pppppppppppppppp'
+          ]
+        },
+        desert: {
+          theme: { fullBleed: true },
+          palette: { s: '#38bdf8', a: '#7dd3fc', y: '#fef08a', n: '#fcd34d', d: '#eab308', o: '#ea580c', g: '#15803d', l: '#22c55e' },
+          grid: [
+            'ssssssssssssyyss',
+            'ssssssssssssyyss',
+            'aaaaaaaaaaaaaaaa',
+            'aaaaaaannaaaaaaa',
+            'aaaaaannnnaaaaaa',
+            'aaaaannoonnaaaaa',
+            'aaaannnnnnnnaaaa',
+            'aaannoonnoonnaaa',
+            'aannnnnddnnnnnaa',
+            'aannnnnddnnnnnga',
+            'nnnnnnnnnnnnnglg',
+            'ndnnnnnnnnnnngla',
+            'nnnnnnnnnnnnnnga',
+            'nndddnnnnndddnnn',
+            'dddddddddddddddd',
+            'dddddddddddddddd'
+          ]
+        },
+        jungle: {
+          theme: { fullBleed: true },
+          palette: { s: '#38bdf8', d: '#14532d', g: '#16a34a', l: '#4ade80', t: '#713f12', b: '#422006', o: '#f97316', v: '#22c55e' },
+          grid: [
+            'ggllddggggllddgg',
+            'gllggddggllggddg',
+            'ddggggggggggggdd',
+            'svgggttbgggggvvs',
+            'svddgttbgggddvvs',
+            'svssgttbogsssvss',
+            'svsssttbsssssvss',
+            'sssssttbsssssvss',
+            'ssvvsttbssvvssss',
+            'ssvvsttbssvvssss',
+            'ggvvgttbggvvgggg',
+            'gdddgttbgdddgggg',
+            'ddddgttbdddddddd',
+            'ddddbbbbdddddddd',
+            'gggggggggggggggg',
+            'dddddddddddddddd'
+          ]
+        },
+        snowy_taiga: {
+          theme: { fullBleed: true },
+          palette: { s: '#334155', a: '#475569', w: '#f8fafc', i: '#cbd5e1', g: '#14532d', p: '#166534', t: '#5c3a21', r: '#dc2626' },
+          grid: [
+            'sswssssssswsssss',
+            'ssssswwsssssssss',
+            'aaaaagwaaawwaaaa',
+            'aaaagpggaaagwaaa',
+            'aaagwppggagpggaa',
+            'aaaagpggagwppgga',
+            'aaagppgggaagpgga',
+            'aagwwppgggagppga',
+            'aaaaattaaaaattaa',
+            'aaaaattaaaaattaa',
+            'wwwwwwwwwwwwwwww',
+            'wiwwwwrwwrwwwwiw',
+            'wwwwggrggrggwwww',
+            'wiiwwggggggwwiiw',
+            'iiiiiiiiiiiiiiii',
+            'iiiiiiiiiiiiiiii'
+          ]
+        },
+
+        /* ------------------- ARMES & COMBAT (10) ------------------- */
+        netherite_sword: {
+          theme: { bgTop: '#2b1c2e', bgBottom: '#100a12', glow: '#a855f7' },
+          palette: { k: '#1c1821', d: '#362f3d', m: '#574d61', l: '#8c7e9c', g: '#eab308', w: '#5c3a21', b: '#3b2413' },
+          grid: [
+            '.............kk.',
+            '............klk.',
+            '...........klmk.',
+            '..........klmdk.',
+            '.........klmdk..',
+            '........klmdk...',
+            '.......klmdk....',
+            '......klmdk.....',
+            '...kkklmdk......',
+            '...kggmdk.......',
+            '....kgdk........',
+            '....kwgkk.......',
+            '...kwb.kk.......',
+            '..kwb...........',
+            '.kbb............',
+            '.kk.............'
+          ]
+        },
+        diamond_sword: {
+          theme: { bgTop: '#0c2f36', bgBottom: '#061418', glow: '#00d2d3' },
+          palette: { k: '#0e3a42', d: '#0891b2', c: '#22d3ee', l: '#a5f3fc', g: '#155e75', w: '#78350f', b: '#451a03' },
+          grid: [
+            '.............kk.',
+            '............klk.',
+            '...........klck.',
+            '..........klcdk.',
+            '.........klcdk..',
+            '........klcdk...',
+            '.......klcdk....',
+            '......klcdk.....',
+            '...kkklcdk......',
+            '...kggcdk.......',
+            '....kgdk........',
+            '....kwgkk.......',
+            '...kwb.kk.......',
+            '..kwb...........',
+            '.kbb............',
+            '.kk.............'
+          ]
+        },
+        netherite_axe: {
+          theme: { bgTop: '#2d1c27', bgBottom: '#120a10', glow: '#f43f5e' },
+          palette: { k: '#1c1821', d: '#3a3242', m: '#5d5169', l: '#9b8dad', w: '#6b4423', b: '#422813' },
+          grid: [
+            '.......kkkkk....',
+            '......klmmdkk...',
+            '.....klmddddk...',
+            '.....kmmdddkk...',
+            '......kkddkwk...',
+            '........kkwbk...',
+            '........kwbk....',
+            '.......kwbk.....',
+            '......kwbk......',
+            '.....kwbk.......',
+            '....kwbk........',
+            '...kwbk.........',
+            '..kwbk..........',
+            '.kwbk...........',
+            '.kbb............',
+            '..kk............'
+          ]
+        },
+        bow: {
+          theme: { bgTop: '#2b2013', bgBottom: '#120d08', glow: '#f59e0b' },
+          palette: { w: '#92400e', l: '#b45309', d: '#451a03', s: '#e2e8f0', a: '#cbd5e1', f: '#f8fafc', t: '#64748b' },
+          grid: [
+            '.....ddd........',
+            '...ddwllw.......',
+            '..dwl...sw...tt.',
+            '.dwl....s.w.tta.',
+            '.dw.....s..aaw..',
+            'dw......s.aw....',
+            'dw.....asaw.....',
+            'dw....asaw......',
+            'dw...as.s.......',
+            '.dw.fa..s.......',
+            '.dwff...s.......',
+            '..dwl...s.......',
+            '...ddwl.s.......',
+            '.....ddds.......',
+            '................',
+            '................'
+          ]
+        },
+        crossbow: {
+          theme: { bgTop: '#24212e', bgBottom: '#0f0d14', glow: '#f97316' },
+          palette: { w: '#92400e', l: '#b45309', d: '#451a03', i: '#94a3b8', k: '#334155', s: '#e2e8f0', r: '#ef4444', y: '#fde047' },
+          grid: [
+            '......ii........',
+            '.....iwwi....ry.',
+            '....iwddwi..rry.',
+            '...iwds..wi.rr..',
+            '..iwd.s...wi....',
+            '..kd..s..iwl....',
+            '......s.iwl.....',
+            '......siwl......',
+            '.....siwl.......',
+            '....siwl........',
+            '...s.iwl........',
+            '..s.dwl.........',
+            '.s.dwl..........',
+            '..dwk...........',
+            '.dkk............',
+            '................'
+          ]
+        },
+        trident: {
+          theme: { bgTop: '#0b2f38', bgBottom: '#05151a', glow: '#2dd4bf' },
+          palette: { k: '#115e59', d: '#0d9488', c: '#2dd4bf', l: '#99f6e4', w: '#ccfbf1' },
+          grid: [
+            '..........w..w..',
+            '.........wc.wc..',
+            '........wcdwcdw.',
+            '.........kcdkdc.',
+            '........kcccdck.',
+            '.........kcdkk..',
+            '........kcdk....',
+            '.......kcdk.....',
+            '......kcdk......',
+            '.....kcdk.......',
+            '....kcdk........',
+            '...kcdk.........',
+            '..kcdk..........',
+            '.kcdk...........',
+            '.kdk............',
+            '.kk.............'
+          ]
+        },
+        mace: {
+          theme: { bgTop: '#262b38', bgBottom: '#0e1117', glow: '#38bdf8' },
+          palette: { k: '#1e293b', d: '#475569', m: '#94a3b8', l: '#e2e8f0', b: '#bae6fd', c: '#38bdf8', w: '#f8fafc' },
+          grid: [
+            '........kkkkkk..',
+            '.......kllmmmdk.',
+            '......klmmddddk.',
+            '......klmddmddk.',
+            '......kmmddmmkk.',
+            '......kdddddkk..',
+            '.......kkcwk....',
+            '.......kcwk.....',
+            '......kcwk......',
+            '.....kbck.......',
+            '....kcwk........',
+            '...kbck.........',
+            '..kcwk..........',
+            '.kbck...........',
+            '.kck............',
+            '.kk.............'
+          ]
+        },
+        shield: {
+          theme: { bgTop: '#26231d', bgBottom: '#110f0c', glow: '#fbbf24' },
+          palette: { k: '#1e293b', i: '#94a3b8', l: '#cbd5e1', w: '#92400e', o: '#b45309', d: '#78350f', g: '#facc15' },
+          grid: [
+            '...kkkkkkkkkk...',
+            '..kllllllllllk..',
+            '..kliiiiiiiilk..',
+            '..klowwwwwdolk..',
+            '..klowogggdolk..',
+            '..klowogggdolk..',
+            '..klowwggwdolk..',
+            '..klowwggwdolk..',
+            '..klowwwwwdolk..',
+            '..klowwwwwdolk..',
+            '..kliiiiiiiilk..',
+            '...kliiiiiilk...',
+            '....kliiiilk....',
+            '.....kliilk.....',
+            '......kllk......',
+            '.......kk.......'
+          ]
+        },
+        end_crystal: {
+          theme: { bgTop: '#2e103d', bgBottom: '#100617', glow: '#e879f9' },
+          palette: { w: '#f8fafc', s: '#cbd5e1', m: '#d946ef', l: '#f0abfc', p: '#9333ea', k: '#334155', d: '#1e293b' },
+          grid: [
+            '.......ww.......',
+            '......w..w......',
+            '.....w.ll.w.....',
+            '....w.lmml.w....',
+            '...w.lmpml..w...',
+            '..w..mmpmm...w..',
+            '..w..lmpml...w..',
+            '...w..lmml..w...',
+            '....w..ll..w....',
+            '.....w....w.....',
+            '......s..s......',
+            '.......ss.......',
+            '....kkkkkkkk....',
+            '...kdkkdkkdkk...',
+            '...dddddddddd...',
+            '................'
+          ]
+        },
+        iron_sword: {
+          theme: { bgTop: '#23272f', bgBottom: '#0f1116', glow: '#cbd5e1' },
+          palette: { k: '#1e293b', d: '#64748b', m: '#cbd5e1', l: '#f8fafc', g: '#475569', w: '#854d0e', b: '#451a03' },
+          grid: [
+            '.............kk.',
+            '............klk.',
+            '...........klmk.',
+            '..........klmdk.',
+            '.........klmdk..',
+            '........klmdk...',
+            '.......klmdk....',
+            '......klmdk.....',
+            '...kkklmdk......',
+            '...kggmdk.......',
+            '....kgdk........',
+            '....kwgkk.......',
+            '...kwb.kk.......',
+            '..kwb...........',
+            '.kbb............',
+            '.kk.............'
+          ]
+        },
+
+        /* ===================== NOUVEAUX PIXEL-ARTS (v2) ===================== */
+        spider: {
+          theme: { bgTop: '#221a24', bgBottom: '#0d0a10', glow: '#a855f7' },
+          palette: { k: '#181820', d: '#2e2e3c', D: '#232330', r: '#ff4d4d', e: '#c026d3', f: '#4a4a5a' },
+          grid: [
+            '..k..........k..',
+            '..fk........kf..',
+            'k..kkddddddkk..k',
+            '.kkkddddddddkkk.',
+            '..kkddddddddkk..',
+            'k..ddrrrrrrdd..k',
+            '.kkddreerredkkk.',
+            'k..ddrrrrrrdd..k',
+            '.kkkkddddddkkkk.',
+            'k..kkkkkkkkkk..k',
+            '.fk..kkkkkk..kf.',
+            '..kk.........kk.',
+            '.kk...........kk',
+            'k..............k',
+            '.f............f.',
+            '..k..........k..'
+          ]
+        },
+        witch: {
+          theme: { bgTop: '#2a1840', bgBottom: '#100a1c', glow: '#a855f7' },
+          palette: { h: '#7c3aed', H: '#5b21b6', f: '#e8b57c', n: '#c2703d', r: '#4c1d95', R: '#3b1580', g: '#a3e635', k: '#12101a', v: '#9333ea' },
+          grid: [
+            '.....hhhhh......',
+            '.....hhhhh......',
+            '....hhhhhhh.....',
+            '...hhhhhhhhh....',
+            '...Hhhhhhhhh....',
+            '....ffffffff....',
+            '....fgffffgf....',
+            '....fffnffff....',
+            '.....ffffff.....',
+            '...rrrrrrrrrr...',
+            '..rrrRrrrrRrrr..',
+            '..rrrRrrrrRrrr..',
+            '..rrrRrrrrRrrr..',
+            '..rrrrRrrrrrrk..',
+            '...rrrrrrrrr....',
+            '....vvvvvvvv....'
+          ]
+        },
+        elder_guardian: {
+          theme: { bgTop: '#0a2430', bgBottom: '#040f16', glow: '#2dd4bf' },
+          palette: { t: '#2dd4bf', d: '#0d9488', D: '#134e4a', e: '#fde047', k: '#0f172a', w: '#f0fdfa' },
+          grid: [
+            '................',
+            '..tt........tt..',
+            '..tdt.tttt.tdt..',
+            '...dddddddddd...',
+            '..dddttttttddd..',
+            '.tddddkkkkddddt.',
+            'tddddkwwkkkddddt',
+            'tddddkkkwwkddddt',
+            '.tdddtttttttdd..',
+            '...dddddddddd...',
+            '..tDdddddddDt...',
+            '..tDdddddddDt...',
+            '...tddddddddt...',
+            '....ttddddtt....',
+            '......tttt......',
+            '................',
+          ]
+        },
+        shulker: {
+          theme: { bgTop: '#241038', bgBottom: '#0e0716', glow: '#a78bfa' },
+          palette: { s: '#a78bfa', d: '#6d28d9', D: '#4c1d95', p: '#ddd6fe', y: '#fde047', k: '#17101f' },
+          grid: [
+            '................',
+            '....dddddddd....',
+            '...dssssssssd...',
+            '...dsppppppsd...',
+            '...dsppppppsd..d',
+            '...dsssssssssdd.',
+            '...ddddddddddds.',
+            '.pppppppppppppd.',
+            '.ppypkppkyp ppp.',
+            '.pppppppppppppd.',
+            '...dddddddddd...',
+            '...dssssssssd...',
+            '...dssssssssd...',
+            '...dddddddddd...',
+            '....dddddddd....',
+            '................'
+          ]
+        },
+        wither_skeleton: {
+          theme: { bgTop: '#1c1c22', bgBottom: '#0b0b0f', glow: '#64748b' },
+          palette: { b: '#26262f', B: '#3a3a4a', s: '#8b8b9a', e: '#fbbf24', w: '#94a3b8', k: '#0d0d12' },
+          grid: [
+            '....bbbbbbbb..w.',
+            '...bbbbbbbbbb.w.',
+            '...bbebbbbebb.w.',
+            '...bbbbbbbbbb.w.',
+            '....bBbbbbBb..w.',
+            '.....bbbbbb..w..',
+            '...bbb....bbbw..',
+            '..wbbb....bbbw..',
+            '.wbbbb....bbb...',
+            '.ww.bbb..bbb....',
+            '.w..bbbbbbb.....',
+            '.w...bbbbb......',
+            '.w...bbbbb......',
+            '.w...b...b......',
+            '....bb...bb.....',
+            '....bb...bb.....'
+          ]
+        },
+        drowned: {
+          theme: { bgTop: '#132428', bgBottom: '#071013', glow: '#2dd4bf' },
+          palette: { h: '#57a39c', g: '#77b8b0', l: '#92c9c1', d: '#3a6f6b', k: '#0d1719', c: '#15827d', t: '#0e655f' },
+          grid: [
+            '....hhhhhhhh....',
+            '...hhgggggghh...',
+            '...hglgggglgh...',
+            '...gggggggggg...',
+            '...ggkkggkkgg...',
+            '...ggggddgggg...',
+            '...ggddkkddgg...',
+            '....gggggggg....',
+            '..ccccccccttcc..',
+            '..cccccccccttc..',
+            '..ggccccccccgg..',
+            '..ggccccccccgg..',
+            '....cccccccc....',
+            '....tttttttt....',
+            '....ttt..ttt....',
+            '....ddd..ddd....'
+          ]
+        },
+        magma_cube: {
+          theme: { bgTop: '#3a1207', bgBottom: '#150602', glow: '#f97316' },
+          palette: { o: '#f97316', r: '#dc2626', y: '#fbbf24', k: '#1c1917', d: '#7c2d12' },
+          grid: [
+            '................',
+            '..oooooooooo....',
+            '..oyyyrrryyoo...',
+            '..oyyrryyrryo...',
+            '...oyrkkykkyo...',
+            '...oryykkyyro...',
+            '...oykkkkkkyo...',
+            '...oyykyrkyyo...',
+            '...rrykkyyrro...',
+            '...ooryykyrro...',
+            '....orryyrro....',
+            '.....oooooo.....',
+            '....dddddd......',
+            '...ddddd........',
+            '..dd..d.........',
+            '................'
+          ]
+        },
+        allay: {
+          theme: { bgTop: '#0e2036', bgBottom: '#050c18', glow: '#60a5fa' },
+          palette: { b: '#93c5fd', B: '#3b82f6', w: '#eff6ff', k: '#0b1120', g: '#60a5fa', s: '#bfdbfe' },
+          grid: [
+            '...g........g...',
+            '..gg.bbbbbb.gg..',
+            '.g.bbbbbbbbb.g..',
+            '..bbbbbbbbbbbb..',
+            '..bbwkbbbbkwb...',
+            '..bbkkbbbbkkb...',
+            '..bbbbbbbbbbb...',
+            '..bbbbkwwkbbb...',
+            '...bbbbbbbbbb...',
+            '....bbbbbbbb....',
+            '.....ss ss......',
+            '....sssss.......',
+            '....ss.ss.......',
+            '......b...b.....',
+            '.....b.b........',
+            '................'
+          ]
+        },
+        warped_forest: {
+          theme: { fullBleed: true },
+          palette: { s: '#1b1240', S: '#241747', t: '#2dd4bf', t2: '#059669', u: '#0f766e', g: '#105e52', G: '#0b4a40', p: '#c084fc', o: '#8b5cf6' },
+          grid: [
+            'sspppssppssppsss',
+            'ssppsspssppspsss',
+            'ss.ppppps.pppp.s',
+            'ss.tt..t.tt..ss.',
+            '...tt.tt.tt..t..',
+            'tttttt.tttt.ttt.',
+            '.tttt.tttt.tttt.',
+            '.utu.u.tutu.utu.',
+            'gGGGGGGGGGGGGGGG',
+            'GGggggGGgggGGGGG',
+            'popopopo.p.opop.',
+            'gGGGGGGGGGGGGGGG',
+            'GGGGGGgGGGGGGGGG',
+            'GGggGGGGGgGGGGGg',
+            'GGGGGGGGGGGGGGGG',
+            'GGGGGGGGGGGGGGGG'
+          ]
+        },
+        basalt_deltas: {
+          theme: { fullBleed: true },
+          palette: { s: '#2b2b30', S: '#232327', p: '#3f3f46', P: '#52525b', a: '#71717a', l: '#f97316', L: '#fbbf24', k: '#18181b' },
+          grid: [
+            'ssaassssaaasasss',
+            'sasassassss.asas',
+            'ss..s....s..ss.s',
+            'sS.PP..PPP..S..s',
+            's..PP.PPPP..PP.s',
+            's..PP.PPPP..P...',
+            '....PP.PPP..P...',
+            '....PP.PPP..PP..',
+            's...PP.PPP..P...',
+            '..sPP..PP....P..',
+            'LLLllllllllllLLL',
+            'lLLlllLLllLLLlll',
+            'kLLLlllllllLLLlk',
+            'kkLLLllllLLLkkkk',
+            'kkkkLkllkkLkkkkk',
+            'kkkkkkkkkkkkkkkk'
+          ]
+        },
+        ice_spikes: {
+          theme: { fullBleed: true },
+          palette: { s: '#a8d4ff', S: '#8ec4f7', i: '#bfe9ff', I: '#7cc4f5', w: '#f0f9ff', W: '#dbeafe', b: '#3b82f6' },
+          grid: [
+            'ssSSSSssSSssssSS',
+            'sSSSSSSSSSSSSSSS',
+            '..I......II.....',
+            '..i......ii..i..',
+            's.II..i..ii..I..',
+            'S.iii.II.ii.ii.s',
+            's.iii.ii.ii.iiis',
+            'SwiIIiIiiIIiIiSS',
+            'SwiiiiiIIIiiiSSS',
+            'SS.iii..ii.SSSSS',
+            'SSSiiSSSSSSSSSSS',
+            'wWwWwWwWwWwWwWwW',
+            'WwwwWwwwWwwWwwww',
+            'wwwWwwWwwwWwwwWw',
+            'WwwWwwwWwwWwWwww',
+            'wwWwwwWwwWwwWwww'
+          ]
+        },
+        totem: {
+          theme: { bgTop: '#332607', bgBottom: '#140e02', glow: '#facc15' },
+          palette: { g: '#facc15', G: '#eab308', e: '#10b981', d: '#a16207', k: '#140e02', w: '#fef9c3' },
+          grid: [
+            '....gggggg......',
+            '...gggggggg.....',
+            '...ggekkeeggk...',
+            '...ggeeeeeggk...',
+            '...gggggggggk...',
+            '...gwgggggggw...',
+            '....ggddggg.....',
+            '...ddddddddd....',
+            '..gGGdddddGGg...',
+            '..gGGdddddGGg...',
+            '...ddddddddd....',
+            '...ddddddddd....',
+            '...ddd...ddd....',
+            '...ddd...ddd....',
+            '...ddd...ddd....',
+            '...ddd...ddd....'
+          ]
+        },
+        tnt: {
+          theme: { bgTop: '#2e0a0a', bgBottom: '#120303', glow: '#f87171' },
+          palette: { r: '#dc2626', R: '#b91c1c', w: '#f5f5f4', k: '#1c1917' },
+          grid: [
+            '................',
+            'rrrrrrrrrrrrrrr.',
+            'RrrRrrrrrrRrrr..',
+            'rrrrrrrrrrrrrrr.',
+            'rrrrrwwwwrrrrrr.',
+            'rrrrwwwwwwrrrrr.',
+            'wwwwkwkwkwkwwwww',
+            'wwwwkwwkwwkwkwww',
+            'wwwwkwkwkwwkwwww',
+            'wwwwwkwwkwwkwwww',
+            'rrrrwwwwwwrrrrr.',
+            'rrrrrwwwwrrrrrr.',
+            'RrrRrrrRrrrRrrr.',
+            'rrrrrrrrrrrrrrr.',
+            'rrrrrrrrrrrrr...',
+            '................'
+          ]
+        },
+        golden_apple: {
+          theme: { bgTop: '#2e2104', bgBottom: '#120a02', glow: '#fbbf24' },
+          palette: { a: '#fbbf24', A: '#d97706', l: '#4ade80', s: '#713f12', w: '#fef3c7', e: '#fcd34d' },
+          grid: [
+            '................',
+            '......a.a.......',
+            '.....aaaaaa.....',
+            '...aaaaaaaaaa...',
+            '..aawwwaaaaa a..',
+            '..awwwwwaaaaaa..',
+            '.awwwwwaaaaae a.',
+            '.awwwaaaaaeeea..',
+            '.awwaaaaeeeeea..',
+            '.aawaaaaaeeea...',
+            '..aaaaaaaaaa a..',
+            '...aaaaaaaaaa...',
+            '....aaaaaaaa....',
+            '.....a.aa.a.....',
+            '................',
+            '................'
+          ]
+        }
+      };
+
+      /* Pré-génère toutes les URL d'images pixel-art une seule fois au chargement */
+      const PIXEL_IMAGES = {};
+      Object.entries(PIXEL_ART_DEFS).forEach(([key, def]) => {
+        PIXEL_IMAGES[key] = createPixelArtURI(def.grid, def.palette, def.theme);
+      });
+
+      /* =====================================================================
+         2. BASE DE DONNÉES COMPLÈTE (12 MOBS, 9 MONDES, 10 ARMES)
+         ===================================================================== */
+
+      const DATABASE = [
+        /* ========================= MOBS (12) ========================= */
+        {
+          id: 'mob-creeper',
+          page: 'mobs',
+          name: 'Le Creeper',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'creeper',
+          summary: 'La terreur silencieuse de Minecraft : il s’approche sans bruit puis explose en faisant "Pssss..." !',
+          stats: {
+            hp: 20, hpLabel: '20 PV (10 ❤️)', hpPercent: 18,
+            damage: 'Jusqu’à 43', damagePercent: 86,
+            danger: 4, dangerLabel: '4 / 5 — Élevé'
+          },
+          spawn: 'Overworld (zones sombres, grottes, nuit)',
+          strengths: [
+            'Se déplace presque sans aucun bruit de pas.',
+            'Explosion dévastatrice qui détruit blocs et constructions.',
+            'Devient un Creeper Chargé (2× plus puissant) s’il est frappé par la foudre.'
+          ],
+          weaknesses: [
+            'Fuit immédiatement les Chats et les Ocelots.',
+            'Un simple Bouclier levé bloque 100 % des dégâts de son explosion.',
+            'L’eau annule totalement la destruction de blocs (seuls les dégâts restent).',
+            'Technique "Sprint-Hit" : frappe-le puis recule aussitôt pour annuler le compte à rebours.'
+          ],
+          drops: 'Poudre à canon (0–2), Disque musical (si tué par un Squelette), Tête de Creeper (si tué par un Creeper Chargé) • 5 XP',
+          tip: 'Garde toujours un bouclier en main secondaire dès le premier jour et éclaire bien les environs de ta base.',
+          tags: ['explosion', 'poudre a canon', 'chat', 'bouclier', 'vert']
+        },
+        {
+          id: 'mob-enderman',
+          page: 'mobs',
+          name: "L'Enderman",
+          subCategory: 'Neutres',
+          badgeText: 'Neutre',
+          badgeColor: 'bg-mc-xp text-black',
+          imageKey: 'enderman',
+          summary: 'Créature sombre de 3 blocs de haut capable de se téléporter et de voler des blocs. Ne croise jamais son regard !',
+          stats: {
+            hp: 40, hpLabel: '40 PV (20 ❤️)', hpPercent: 32,
+            damage: '7 (Normal) / 10.5 (Difficile)', damagePercent: 52,
+            danger: 3.5, dangerLabel: '3.5 / 5 — Redoutable'
+          },
+          spawn: 'Overworld, Forêt Biscornue (Nether) et L’End (très abondant)',
+          strengths: [
+            'Téléportation instantanée dans ton dos et esquive automatique de toutes les flèches.',
+            'Inflige de gros dégâts et poursuit longtemps une fois provoqué.',
+            'Peut ramasser et déplacer certains blocs de ta base.'
+          ],
+          weaknesses: [
+            'L’eau et la pluie lui infligent des dégâts continus et le font fuir.',
+            'Mesure 3 blocs : construis un petit toit de 2 blocs de haut pour le frapper en totale sécurité !',
+            'Porter une Citrouille sculptée sur la tête empêche de le provoquer en le regardant.',
+            'Un simple Bateau posé au sol le piège définitivement.'
+          ],
+          drops: 'Perle de l’Ender (0–1, jusqu’à 4 avec Butin III) • 5 XP',
+          tip: 'Dans l’End, pose toujours un seau d’eau à tes pieds si plusieurs Endermen t’attaquent en même temps.',
+          tags: ['teleportation', 'perle', 'eau', 'citrouille', 'end', 'bateau']
+        },
+        {
+          id: 'mob-zombie',
+          page: 'mobs',
+          name: 'Le Zombie',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'zombie',
+          summary: 'Le mort-vivant classique qui attaque en groupe la nuit. Méfie-toi surtout des Bébés Zombies ultra rapides !',
+          stats: {
+            hp: 20, hpLabel: '20 PV (10 ❤️)', hpPercent: 18,
+            damage: '3 (Normal) / 4.5 (Difficile)', damagePercent: 25,
+            danger: 2, dangerLabel: '2 / 5 — Modéré'
+          },
+          spawn: 'Overworld (nuit, grottes, donjons) — partout où la lumière est à 0',
+          strengths: [
+            'Peut appeler des renforts lorsqu’il est blessé en difficulté Difficile.',
+            'Peut casser les portes en bois (Difficile) et infecter les Villageois.',
+            'Les Bébés Zombies sont minuscules, ne brûlent pas toujours s’ils ont un casque et courent très vite.'
+          ],
+          weaknesses: [
+            'Brûle automatiquement à la lumière du soleil (sauf s’il porte un casque ou est dans l’eau).',
+            'Extrêmement sensible à l’enchantement Châtiment (Smite).',
+            'Les potions de Soin (Instant Health) lui infligent de lourds dégâts (effet inversé sur les morts-vivants).',
+            'Déplacement lent : facile à repousser avec Recul (Knockback).'
+          ],
+          drops: 'Chair putréfiée (0–2), Lingot de fer / Carotte / Pomme de terre (rare) • 5 XP',
+          tip: 'Si un Villageois devient Zombie, soigne-le avec une potion jetable de Faiblesse + une Pomme dorée pour obtenir des réductions énormes !',
+          tags: ['mort-vivant', 'soleil', 'smite', 'chatiment', 'villageois']
+        },
+        {
+          id: 'mob-skeleton',
+          page: 'mobs',
+          name: 'Le Squelette',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'skeleton',
+          summary: 'Archer redoutable qui recule en tirant avec précision. Un cauchemar dans les grottes sans bouclier.',
+          stats: {
+            hp: 20, hpLabel: '20 PV (10 ❤️)', hpPercent: 18,
+            damage: '4 par flèche (plus si arc enchanté)', damagePercent: 38,
+            danger: 3, dangerLabel: '3 / 5 — Dangereux'
+          },
+          spawn: 'Overworld (grottes, nuit) & Vallée des Âmes (Nether)',
+          strengths: [
+            'Tire vite et précis tout en gardant ses distances et en esquivant latéralement.',
+            'Ses flèches repoussent le joueur (très dangereux près d’un ravin ou de la lave).',
+            'Se met à l’ombre ou dans l’eau dès que le jour se lève.'
+          ],
+          weaknesses: [
+            'Le Bouclier bloque et renvoie ses flèches ! Avance bouclier levé puis frappe.',
+            'Brûle au soleil et subit de lourds bonus de dégâts avec Châtiment (Smite).',
+            'Fuit les Loups apprivoisés qui l’attaquent spontanément.',
+            'Si une de ses flèches touche un autre mob, ils se battent entre eux.'
+          ],
+          drops: 'Os (0–2), Flèches (0–2), Arc (parfois enchanté) • 5 XP',
+          tip: 'Place-toi derrière un Creeper affaibli pour qu’un Squelette l’achève et récupère gratuitement un disque musical !',
+          tags: ['arc', 'fleches', 'os', 'bouclier', 'loup', 'smite']
+        },
+        {
+          id: 'mob-blaze',
+          page: 'mobs',
+          name: 'Le Blaze',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'blaze',
+          summary: 'Gardien enflammé volant des Forteresses du Nether. Indispensable à chasser pour fabriquer les Yeux de l’Ender.',
+          stats: {
+            hp: 20, hpLabel: '20 PV (10 ❤️)', hpPercent: 18,
+            damage: '5 (boules de feu) + 6 (mêlée) + feu', damagePercent: 58,
+            danger: 4, dangerLabel: '4 / 5 — Élevé'
+          },
+          spawn: 'Forteresses du Nether (notamment autour des Générateurs de Blazes)',
+          strengths: [
+            'Vole et tire des salves de 3 boules de feu qui enflamment le joueur et le sol.',
+            'Totalement immunisé contre le feu et la lave.',
+            'Son corps enflammé inflige de gros dégâts au contact.'
+          ],
+          weaknesses: [
+            'Les simples Boules de neige lui infligent 3 PV de dégâts chacune (7 boules suffisent !).',
+            'Une Potion de Résistance au Feu rend ses boules de feu totalement inoffensives.',
+            'Vulnérable à l’eau, à la pluie et aux tirs d’Arc à couvert.',
+            'Le Bouclier bloque entièrement ses salves enflammées.'
+          ],
+          drops: 'Bâton de Blaze (0–1, uniquement si tué par un joueur ou un loup) • 10 XP',
+          tip: 'Troque un peu d’or avec les Piglins pour obtenir une potion de Résistance au Feu avant d’attaquer un spawner de Blazes.',
+          tags: ['nether', 'forteresse', 'feu', 'boule de neige', 'baton de blaze']
+        },
+        {
+          id: 'mob-warden',
+          page: 'mobs',
+          name: 'Le Warden',
+          subCategory: 'Boss',
+          badgeText: 'Boss',
+          badgeColor: 'bg-purple-600 text-white',
+          imageKey: 'warden',
+          summary: 'Colosse aveugle des Abîmes aux 500 PV. Il n’est pas conçu pour être combattu, mais pour être évité en silence !',
+          stats: {
+            hp: 500, hpLabel: '500 PV (250 ❤️)', hpPercent: 100,
+            damage: '30 (mêlée) / 10 (onde sonique)', damagePercent: 100,
+            danger: 5, dangerLabel: '5 / 5 — Extrême'
+          },
+          spawn: 'Abîmes (Deep Dark) & Cités Antiques après 4 déclenchements de Hurleur Sculk',
+          strengths: [
+            'Plus de PV que l’Ender Dragon et le Wither réunis (500 PV) !',
+            'Son attaque à distance (Onde Sonique) traverse les murs, les armures et les boucliers.',
+            'Inflige l’effet Obscurité (Darkness) et renifle la position du joueur.'
+          ],
+          weaknesses: [
+            'Complètement aveugle : il ne repère que les bruits (vibrations) et l’odeur à courte portée.',
+            'La Laine absorbe 100 % des bruits : pose de la laine au sol et accroupis-toi (Sneak).',
+            'Lance des Boules de neige ou des Œufs loin de toi pour attirer son attention ailleurs.',
+            'Disparaît sous terre au bout de 60 secondes s’il ne détecte aucune vibration.'
+          ],
+          drops: '1 Catalyseur de Sculk • 5 XP (récompense volontairement faible pour décourager le combat)',
+          tip: 'Apporte toujours un stack de laine, une houe (casse vite le Sculk) et des boules de neige dans les Cités Antiques.',
+          tags: ['deep dark', 'sculk', 'cite antique', 'laine', 'aveugle', 'boss']
+        },
+        {
+          id: 'mob-ender-dragon',
+          page: 'mobs',
+          name: "L'Ender Dragon",
+          subCategory: 'Boss',
+          badgeText: 'Boss Final',
+          badgeColor: 'bg-purple-600 text-white',
+          imageKey: 'ender_dragon',
+          summary: 'La souveraine légendaire de L’End. La vaincre ouvre l’accès aux Îles Extérieures et aux précieuses Élytres.',
+          stats: {
+            hp: 200, hpLabel: '200 PV (100 ❤️)', hpPercent: 85,
+            damage: '10 (charge) + Souffle du Dragon', damagePercent: 84,
+            danger: 5, dangerLabel: '5 / 5 — Boss Final'
+          },
+          spawn: 'Île centrale de la dimension de L’End (réinvocable avec 4 Cristaux de l’End)',
+          strengths: [
+            'Se régénère en continu grâce aux Cristaux de l’End perchés sur les piliers d’obsidienne.',
+            'Projette le joueur très haut dans les airs (chute mortelle sans seau d’eau).',
+            'Crache un nuage de Souffle du Dragon qui inflige des dégâts magiques persistants.'
+          ],
+          weaknesses: [
+            'Détruis tous les Cristaux d’obsidienne (à l’arc ou aux boules de neige) pour stopper ses soins.',
+            'Les Lits explosent dans L’End et lui infligent des dégâts massifs quand elle se perche au centre !',
+            'Frappe sa tête (et non sa queue) lorsqu’elle se pose sur le portail pour infliger 4× plus de dégâts.',
+            'Une Potion de Chute Lente ou un Seau d’eau neutralise ses projections.'
+          ],
+          drops: '12 000 XP (premier combat), Œuf de Dragon, Portail de retour et Passerelle de l’End',
+          tip: 'Prends des Fioles vides pour récolter son Souffle du Dragon au sol et une Citrouille ou un Seau d’eau contre les Endermen.',
+          tags: ['end', 'boss', 'cristaux', 'lit', 'elytres', 'dragon']
+        },
+        {
+          id: 'mob-wither',
+          page: 'mobs',
+          name: 'Le Wither',
+          subCategory: 'Boss',
+          badgeText: 'Boss',
+          badgeColor: 'bg-purple-600 text-white',
+          imageKey: 'wither',
+          summary: 'Boss destructeur à 3 têtes invoqué par le joueur. Sa défaite offre l’Étoile du Nether pour créer une Balise.',
+          stats: {
+            hp: 300, hpLabel: '300 PV (Java) / 600 (Bedrock)', hpPercent: 92,
+            damage: '8 + Effet Wither II + Explosions', damagePercent: 90,
+            danger: 5, dangerLabel: '5 / 5 — Cataclysmique'
+          },
+          spawn: 'Invoqué manuellement : 4 blocs de Sable des âmes en T + 3 Crânes de Wither Squelette',
+          strengths: [
+            'Explose violemment à la fin de sa charge d’invocation et détruit presque tous les blocs.',
+            'Inflige l’effet Wither (draine les cœurs noircis) tout en se soignant.',
+            'Sous 50 % de PV, génère une armure qui le rend totalement immunisé aux flèches !'
+          ],
+          weaknesses: [
+            'C’est un mort-vivant : une épée avec Châtiment V (Smite V) le découpe en quelques secondes !',
+            'L’invoquer profondément sous terre dans un long tunnel étroit limite sa fuite dans le ciel.',
+            'Boire du Lait supprime instantanément l’effet Wither (ou utilise des Pommes dorées).',
+            'Arc en phase 1 (100%→50% PV), puis Épée Châtiment V en phase 2.'
+          ],
+          drops: '1 Étoile du Nether (indestructible par les explosions) • 50 XP',
+          tip: 'Ne l’invoque JAMAIS près de ta base ! Un tunnel à la couche Y = -54 ou sous le toit du Nether est bien plus sûr.',
+          tags: ['boss', 'etoile du nether', 'balise', 'smite', 'chatiment', 'lait']
+        },
+        {
+          id: 'mob-ghast',
+          page: 'mobs',
+          name: 'Le Ghast',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'ghast',
+          summary: 'Spectre géant flottant du Nether dont les pleurs glacent le sang. Il bombarde le joueur de boules de feu explosives.',
+          stats: {
+            hp: 10, hpLabel: '10 PV (5 ❤️)', hpPercent: 10,
+            damage: '17 (explosion de boule de feu)', damagePercent: 62,
+            danger: 3.5, dangerLabel: '3.5 / 5 — Dangereux'
+          },
+          spawn: 'Le Nether (Déserts du Nether, Vallée des Âmes, Deltas de Basalte)',
+          strengths: [
+            'Vole très haut au-dessus des lacs de lave, hors de portée de l’épée.',
+            'Ses boules de feu détruisent la Netherrack et peuvent éteindre ton portail du Nether.',
+            'Grande portée de détection (jusqu’à 100 blocs).'
+          ],
+          weaknesses: [
+            'Renvoyer sa propre boule de feu en la frappant (épée, main ou flèche) le tue EN UN COUP !',
+            'Très faible quantité de PV (10 PV) : une seule flèche chargée avec Puissance l’élimine.',
+            'Les blocs de Pierre taillée (Cobblestone) résistent complètement à ses explosions.'
+          ],
+          drops: 'Larme de Ghast (0–1), Poudre à canon (0–2) • 5 XP',
+          tip: 'Protège toujours ton portail du Nether avec de la Cobblestone et garde un Briquet sur toi au cas où un Ghast l’éteindrait.',
+          tags: ['nether', 'larme de ghast', 'boule de feu', 'renvoyer', 'cobblestone']
+        },
+        {
+          id: 'mob-piglin-brute',
+          page: 'mobs',
+          name: 'Le Piglin Brute',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'piglin_brute',
+          summary: 'Garde d’élite musclé des Vestiges de Bastion. Contrairement aux Piglins normaux, ton armure en or ne l’attendrit pas !',
+          stats: {
+            hp: 50, hpLabel: '50 PV (25 ❤️)', hpPercent: 38,
+            damage: '13 (Normal) / 19.5 (Difficile)', damagePercent: 78,
+            danger: 4.5, dangerLabel: '4.5 / 5 — Très élevé'
+          },
+          spawn: 'Vestiges de Bastion dans le Nether (ne réapparaît jamais une fois tué)',
+          strengths: [
+            'Totalement indifférent à l’armure en or et aux lingots jetés au sol.',
+            'Sa hache en or désactive ton bouclier pendant 5 secondes et inflige des dégâts énormes.',
+            'Ne fuit pas les feux des âmes ni les Piglins Zombifiés.'
+          ],
+          weaknesses: [
+            'Vulnérable à la lave ! Un seau de lave posé à ses pieds l’élimine sans même énerver les autres Piglins.',
+            'Un simple Bateau l’immobilise complètement pour le finir à distance.',
+            'Ne peut pas grimper : un pilier de 3 blocs de haut ou une attaque à l’Arc te garde hors de danger.',
+            'Ne réapparaît jamais : une fois nettoyé, le Bastion devient beaucoup plus calme.'
+          ],
+          drops: 'Hache en or (8.5 % de chance) • 20 XP',
+          tip: 'Repère et élimine les Piglins Brutes à l’arc ou à la lave depuis les hauteurs avant de piller les coffres du Bastion.',
+          tags: ['bastion', 'nether', 'hache', 'lave', 'bateau', 'or']
+        },
+        {
+          id: 'mob-iron-golem',
+          page: 'mobs',
+          name: 'Le Golem de Fer',
+          subCategory: 'Neutres',
+          badgeText: 'Neutre',
+          badgeColor: 'bg-mc-xp text-black',
+          imageKey: 'iron_golem',
+          summary: 'Colosse protecteur des villages. Doux avec les villageois, il te projette dans les airs si tu le provoques !',
+          stats: {
+            hp: 100, hpLabel: '100 PV (50 ❤️)', hpPercent: 60,
+            damage: '7.5 à 21.5 + forte projection', damagePercent: 76,
+            danger: 4, dangerLabel: '4 / 5 — Si provoqué'
+          },
+          spawn: 'Villages ou construit par le joueur (4 blocs de fer en T + 1 citrouille sculptée)',
+          strengths: [
+            '100 PV, résistant au recul, immunisé aux dégâts de chute et à la noyade.',
+            'Projette sa cible très haut en infligeant d’immenses dégâts.',
+            'Un Golem construit par le joueur ne l’attaquera jamais.'
+          ],
+          weaknesses: [
+            'Déplacement lent et grande taille (2.7 blocs de haut) : impossible pour lui de passer sous 2 blocs.',
+            'Ne peut pas grimper : un pilier de 3 blocs de haut suffit pour le toucher sans jamais être atteint.',
+            'La lave et les feux de camp lui infligent des dégâts continus.'
+          ],
+          drops: '3 à 5 Lingots de fer, 0 à 2 Coquelicots • 0 XP',
+          tip: 'Tu peux réparer un Golem de Fer blessé en faisant un clic droit dessus avec un Lingot de fer (restaure 25 PV) !',
+          tags: ['village', 'fer', 'pilier', 'protecteur', 'golem']
+        },
+        {
+          id: 'mob-axolotl',
+          page: 'mobs',
+          name: "L'Axolotl",
+          subCategory: 'Pacifiques',
+          badgeText: 'Pacifique',
+          badgeColor: 'bg-mc-emerald text-white',
+          imageKey: 'axolotl',
+          summary: 'Compagnon amphibie adorable des Grottes Luxuriantes. Il attaque les mobs marins hostiles et te soigne au combat !',
+          stats: {
+            hp: 14, hpLabel: '14 PV (7 ❤️)', hpPercent: 14,
+            damage: '2 (contre mobs aquatiques)', damagePercent: 16,
+            danger: 0.5, dangerLabel: '0 / 5 — Allié précieux'
+          },
+          spawn: 'Grottes Luxuriantes (Lush Caves) dans les bassins au-dessus de l’argile',
+          strengths: [
+            'Attaque activement les Noyés, les Gardiens et les Grands Gardiens !',
+            'Fait semblant d’être mort quand il est blessé pour se régénérer en toute sécurité.',
+            'Donne Régénération I et retire Fatigue de minage au joueur qui l’aide à vaincre un mob.'
+          ],
+          weaknesses: [
+            'Se dessèche et subit des dégâts mortels après 5 minutes hors de l’eau (sauf sous la pluie).',
+            'Peu de PV (14 PV) : vulnérable face à un Grand Gardien s’il est seul.',
+            'La variante Bleue est ultra-rare (1 chance sur 1 200 par reproduction).'
+          ],
+          drops: '1–3 XP (ne le tue pas : capture-le dans un Seau d’eau !)',
+          tip: 'Emmène 3 ou 4 Axolotls en seau d’eau lors d’un raid de Monument Océanique : ils t’enlèveront l’effet Fatigue de minage !',
+          tags: ['aquatique', 'allié', 'monument', 'regeneration', 'grotte luxuriante', 'seau']
+        },
+
+        /* ========================= MONDES & BIOMES (9) ========================= */
+        {
+          id: 'world-overworld',
+          page: 'worlds',
+          name: "L'Overworld",
+          subCategory: 'Dimensions',
+          badgeText: 'Dimension',
+          badgeColor: 'bg-mc-emerald text-white',
+          imageKey: 'overworld',
+          summary: 'Ta terre natale riche en forêts, montagnes, océans, villages et cavernes profondes jusqu’à la couche Y = -64.',
+          stats: {
+            danger: 2, dangerLabel: '2 / 5 — Modéré', dangerPercent: 40,
+            riches: '95%', richesLabel: 'Très riche', richesPercent: 95,
+            hostility: 'Cycle Jour / Nuit', hostilityPercent: 45
+          },
+          resources: ['Bois variés', 'Fer, Charbon & Cuivre', 'Diamant (couche Y = -58)', 'Émeraudes & Redstone', 'Villages & Structures'],
+          mobsPresent: ['Creeper', 'Zombie', 'Squelette', 'Enderman', 'Warden (Abîmes)', 'Animaux & Villageois'],
+          weaknesses: [
+            'La nuit et les grottes non éclairées font apparaître des hordes hostiles très rapidement.',
+            'Les chutes dans les ravins géants et les poches de lave souterraines piègent les mineurs.',
+            'Les Creepers silencieux peuvent ruiner ta base ou tes coffres en un instant.',
+            'Ne pas dormir 3 nuits de suite attire les Phantoms dans le ciel.'
+          ],
+          gear: 'Lit, Torches, Seau d’eau (MLG anti-chute), Bouclier, Pioche en fer puis Diamant.',
+          tip: 'Pour trouver un maximum de diamants en 1.21, mine à la couche Y = -58 ou explore les grandes cavernes inondées.',
+          mission: 'Explore une grande caverne jusqu’à la couche -58 et ramène au moins 8 diamants sans mourir !',
+          tags: ['dimension', 'diamant', 'depart', 'grottes', 'surface']
+        },
+        {
+          id: 'world-nether',
+          page: 'worlds',
+          name: 'Le Nether',
+          subCategory: 'Dimensions',
+          badgeText: 'Dimension',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'nether',
+          summary: 'Dimension infernale de lave, de forteresses et de débris antiques. 1 bloc parcouru ici vaut 8 blocs dans l’Overworld !',
+          stats: {
+            danger: 4.5, dangerLabel: '4.5 / 5 — Très dangereux', dangerPercent: 90,
+            riches: '90%', richesLabel: 'Netherite & Quartz', richesPercent: 90,
+            hostility: 'Permanente (pas de nuit)', hostilityPercent: 88
+          },
+          resources: ['Débris antiques (Netherite Y = 15)', 'Bâtons de Blaze', 'Quartz & Or du Nether', 'Verrues du Nether', 'Pierre lumineuse'],
+          mobsPresent: ['Ghast', 'Blaze', 'Piglin & Piglin Brute', 'Wither Squelette', 'Hoglin', 'Cube de Magma'],
+          weaknesses: [
+            'L’EAU S’ÉVAPORE INSTANTANÉMENT ! Impossible d’éteindre le feu ou de faire un MLG seau d’eau.',
+            'Cliquer sur un Lit ou une Ancre mal utilisée provoque une explosion mortelle.',
+            'Les Piglins t’attaquent à vue si tu ne portes pas au moins UNE pièce d’armure en Or.',
+            'La lave coule 2× plus vite que dans l’Overworld et les ponts étroits sont la cible des Ghasts.'
+          ],
+          gear: '1 pièce d’armure en Or, Potion de Résistance au Feu, Arc, Briquet, Cobblestone, Neige poudreuse (pour MLG).',
+          tip: 'Note toujours les coordonnées (X, Z) de ton portail du Nether dès ton arrivée pour ne jamais te perdre.',
+          mission: 'Trouve une Forteresse du Nether, récupère 7 bâtons de Blaze et reviens vivant au portail !',
+          tags: ['lave', 'netherite', 'forteresse', 'bastion', 'or', 'feu', 'dimension']
+        },
+        {
+          id: 'world-end',
+          page: 'worlds',
+          name: "L'End",
+          subCategory: 'Dimensions',
+          badgeText: 'Dimension',
+          badgeColor: 'bg-purple-600 text-white',
+          imageKey: 'end_world',
+          summary: 'Archipel d’îles flottantes baigné dans le Vide cosmique : repaire de l’Ender Dragon et des Cités de l’End.',
+          stats: {
+            danger: 5, dangerLabel: '5 / 5 — Mortel (Vide)', dangerPercent: 100,
+            riches: '100%', richesLabel: 'Élytres & Shulkers', richesPercent: 100,
+            hostility: 'Vide absolu & Boss', hostilityPercent: 95
+          },
+          resources: ['Élytres (Navires de l’End)', 'Carapaces de Shulker', 'Fruits de Chorus', 'Pierre de l’End', 'Butin Diamant enchanté'],
+          mobsPresent: ['Ender Dragon', 'Enderman (très nombreux)', 'Shulker (Cités de l’End)'],
+          weaknesses: [
+            'Tomber dans le Vide tue instantanément et détruit TOUT ton équipement à jamais (même la Netherite).',
+            'Croiser accidentellement le regard des dizaines d’Endermen autour de soi.',
+            'Les projectiles de Shulker donnent l’effet Lévitation (chute fatale au retour au sol).',
+            'Les Lits explosent si tu tentes d’y dormir.'
+          ],
+          gear: 'Potions de Chute Lente, Perles de l’Ender (sauvetage!), Seau d’eau, Citrouille sculptée, Arc Puissance, Blocs de pont.',
+          tip: 'Garde toujours des Perles de l’Ender dans ta barre rapide en explorant les îles extérieures : elles sauvent d’une chute dans le Vide !',
+          mission: 'Pille une Cité de l’End avec son navire volant et ramène tes Élytres ainsi que 2 boîtes de Shulker !',
+          tags: ['dragon', 'elytres', 'shulker', 'vide', 'dimension', 'perle']
+        },
+        {
+          id: 'world-deep-dark',
+          page: 'worlds',
+          name: 'Les Abîmes (Deep Dark)',
+          subCategory: 'Overworld',
+          badgeText: 'Biome Extrême',
+          badgeColor: 'bg-cyan-600 text-white',
+          imageKey: 'deep_dark',
+          summary: 'Cavernes glaciales tapissées de Sculk sous les hautes montagnes, abritant les mystérieuses Cités Antiques.',
+          stats: {
+            danger: 5, dangerLabel: '5 / 5 — Extrême', dangerPercent: 98,
+            riches: '95%', richesLabel: 'Furtivité Rapide & Pommes Notch', richesPercent: 95,
+            hostility: 'Warden (Silence requis)', hostilityPercent: 92
+          },
+          resources: ['Enchantement Furtivité Rapide (Swift Sneak)', 'Pommes dorées enchantées', 'Éclats d’écho', 'Blocs de Sculk (XP)', 'Modèles d’armure'],
+          mobsPresent: ['Aucun mob classique… mais le Warden si tu fais du bruit !'],
+          weaknesses: [
+            'Chaque pas non accroupi, coffre ouvert ou bloc cassé active les Capteurs & Hurleurs Sculk.',
+            'Au 4e cri d’un Hurleur, le Warden surgit du sol avec ses 500 PV.',
+            'L’effet Obscurité (Darkness) plonge ton écran dans le noir par vagues.',
+            'Difficile de s’orienter sans torches ou potions de Vision Nocturne.'
+          ],
+          gear: 'Beaucoup de Laine, Houe enchantée, Vision Nocturne, Boules de neige, Élytres (fuite rapide), Bottes Furtivité Rapide.',
+          tip: 'Entoure complètement un Hurleur Sculk avec de la laine avant de le casser à la houe pour neutraliser définitivement une zone.',
+          mission: 'Ouvre 3 coffres dans une Cité Antique en silence absolu sans jamais réveiller le Warden !',
+          tags: ['warden', 'sculk', 'cite antique', 'laine', 'silence', 'overworld']
+        },
+        {
+          id: 'world-mushroom',
+          page: 'worlds',
+          name: "L'Île aux Champignons",
+          subCategory: 'Overworld',
+          badgeText: 'Biome Rare',
+          badgeColor: 'bg-pink-600 text-white',
+          imageKey: 'mushroom_island',
+          summary: 'Sanctuaire rarissime au milieu de l’océan recouvert de mycélium violet : AUCUN mob hostile n’y apparaît !',
+          stats: {
+            danger: 0.5, dangerLabel: '0.5 / 5 — Havre de paix', dangerPercent: 10,
+            riches: '65%', richesLabel: 'Sécurité totale & Nourriture', richesPercent: 65,
+            hostility: 'Nulle (surface & grottes)', hostilityPercent: 8
+          },
+          resources: ['Mycélium', 'Champimeuhs (ragoût infini !)', 'Champignons géants rouges & bruns', 'Base 100 % sécurisée sans torches'],
+          mobsPresent: ['Champimeuh (rouge et brune si foudroyée)', 'Aucun mob hostile naturel'],
+          weaknesses: [
+            'Extrêmement rare à trouver : demande souvent une longue expédition en bateau.',
+            'Aucun arbre naturel : pense à apporter tes propres pousses de bois !',
+            'Les Spawners souterrains et les Phantoms (si tu ne dors pas) peuvent tout de même apparaître.',
+            'Le mycélium empêche la pousse directe de certains végétaux sans terre classique.'
+          ],
+          gear: 'Bateau, Pousses d’arbres, Bols en bois (pour traire les Champimeuhs en ragoût infini).',
+          tip: 'C’est le meilleur endroit du jeu pour construire ta méga-base ou une salle des coffres géante sans craindre les Creepers.',
+          mission: 'Navigue sur l’océan jusqu’à une Île aux Champignons et établis un avant-poste avec une ferme d’arbres !',
+          tags: ['champimeuh', 'mycelium', 'pacifique', 'base', 'rare', 'overworld']
+        },
+        {
+          id: 'world-crimson',
+          page: 'worlds',
+          name: 'La Forêt Carmin',
+          subCategory: 'Nether & End',
+          badgeText: 'Biome Nether',
+          badgeColor: 'bg-rose-600 text-white',
+          imageKey: 'crimson_forest',
+          summary: 'Forêt rouge sang du Nether au bois ignifuge, peuplée de Piglins marchands et de redoutables Hoglins.',
+          stats: {
+            danger: 4, dangerLabel: '4 / 5 — Élevé', dangerPercent: 80,
+            riches: '75%', richesLabel: 'Bois ignifuge & Troc Or', richesPercent: 75,
+            hostility: 'Hoglins & Piglins', hostilityPercent: 80
+          },
+          resources: ['Bois Carmin (ne brûle pas !)', 'Champilampes (Shroomlights)', 'Côtelettes de porc (Hoglins)', 'Troc avec les Piglins', 'Or du Nether'],
+          mobsPresent: ['Piglin', 'Hoglin', 'Piglin Zombifié', 'Arpenteur (Strider) sur la lave'],
+          weaknesses: [
+            'Les Hoglins chargent violemment et te projettent en l’air (souvent vers la lave).',
+            'Ouvrir un coffre ou miner de l’or devant un Piglin le rend fou de rage, même avec une armure en or !',
+            'Le brouillard rouge masque les falaises abruptes et les puits de lave cachés.'
+          ],
+          gear: 'Armure en Or, Champignons biscornus (les Hoglins les fuient !), Bouclier, Lingots d’or pour troquer.',
+          tip: 'Pose un Champignon biscornu (bleu-vert) au sol : tous les Hoglins alentour prendront immédiatement la fuite !',
+          mission: 'Troque 16 lingots d’or avec des Piglins et repousse un Hoglin grâce à un champignon biscornu !',
+          tags: ['nether', 'hoglin', 'piglin', 'carmin', 'bois', 'troc']
+        },
+        {
+          id: 'world-desert',
+          page: 'worlds',
+          name: 'Le Désert & Temples',
+          subCategory: 'Overworld',
+          badgeText: 'Biome Aride',
+          badgeColor: 'bg-amber-500 text-black',
+          imageKey: 'desert',
+          summary: 'Vastes dunes dorées parsemées de villages en grès, de puits archéologiques et de pyramides pleines de trésors.',
+          stats: {
+            danger: 2.5, dangerLabel: '2.5 / 5 — Pièges cachés', dangerPercent: 50,
+            riches: '80%', richesLabel: 'Sable, TNT & Coffres', richesPercent: 80,
+            hostility: 'Husks & Pyramides piégées', hostilityPercent: 52
+          },
+          resources: ['Sable (verre & TNT)', 'Temples du Désert (Diamants, Pommes dorées, 9 TNT)', 'Sable suspect (Archéologie)', 'Cactus & Lapins'],
+          mobsPresent: ['Zombie Momifié (Husk)', 'Squelette', 'Creeper', 'Chameaux (Villages)', 'Lapins du désert'],
+          weaknesses: [
+            'La salle secrète des Pyramides possède une plaque de pression reliée à 9 blocs de TNT mortels !',
+            'Les Zombies Momifiés (Husks) ne brûlent PAS au soleil et infligent l’effet Faim.',
+            'Absence totale d’arbres : pense à emporter du bois pour tes outils et torches.',
+            'Sable instable qui peut s’effondrer au-dessus d’une grotte.'
+          ],
+          gear: 'Pioche, Pinceau (archéologie), Bois, Torches, Nourriture.',
+          tip: 'Dans un Temple du Désert, creuse TOUJOURS sur le côté (jamais au centre) et casse la plaque de pression avant d’ouvrir les coffres.',
+          mission: 'Découvre un Temple du Désert, désamorce le piège TNT et récupère tout le trésor intact !',
+          tags: ['pyramide', 'tnt', 'temple', 'husk', 'sable', 'overworld']
+        },
+        {
+          id: 'world-jungle',
+          page: 'worlds',
+          name: 'La Jungle Sauvage',
+          subCategory: 'Overworld',
+          badgeText: 'Biome Tropical',
+          badgeColor: 'bg-green-600 text-white',
+          imageKey: 'jungle',
+          summary: 'Forêt tropicale dense aux arbres géants, forêts de bambous, temples anciens, pandas, perroquets et ocelots.',
+          stats: {
+            danger: 2.5, dangerLabel: '2.5 / 5 — Visibilité réduite', dangerPercent: 48,
+            riches: '82%', richesLabel: 'Bambou, Pastèques & Temples', richesPercent: 82,
+            hostility: 'Embuscades & Pièges', hostilityPercent: 50
+          },
+          resources: ['Bambou (échafaudages & combustible)', 'Fèves de cacao & Pastèques', 'Temples de la Jungle', 'Bois d’acajou', 'Perroquets & Pandas'],
+          mobsPresent: ['Ocelot', 'Perroquet', 'Panda', 'Mobs hostiles cachés sous la canopée sombre'],
+          weaknesses: [
+            'La canopée très dense maintient l’ombre en plein jour : Creepers et Squelettes y restent actifs.',
+            'Les Temples de la Jungle contiennent des fils de détente reliés à des distributeurs de flèches.',
+            'Navigation à pied très lente à cause des buissons épais et risque de chute depuis les arbres géants.'
+          ],
+          gear: 'Cisailles (couper feuilles/lianes), Hache, Graines (apprivoiser perroquets), Poisson cru (ocelots).',
+          tip: 'Apprivoise un Perroquet : posé sur ton épaule, il imite les sons des mobs hostiles cachés à proximité pour te prévenir !',
+          mission: 'Explore un Temple de la Jungle, trouve la chambre secrète des leviers et apprivoise un Perroquet !',
+          tags: ['bambou', 'perroquet', 'panda', 'temple', 'lianes', 'overworld']
+        },
+        {
+          id: 'world-taiga',
+          page: 'worlds',
+          name: 'La Taïga Neigeuse',
+          subCategory: 'Overworld',
+          badgeText: 'Biome Glacé',
+          badgeColor: 'bg-sky-500 text-black',
+          imageKey: 'snowy_taiga',
+          summary: 'Forêt de sapins enneigée pleine de loups, de renards polaires, de baies sucrées et d’igloos au sous-sol mystérieux.',
+          stats: {
+            danger: 2, dangerLabel: '2 / 5 — Froid & Pièges', dangerPercent: 42,
+            riches: '72%', richesLabel: 'Sapin, Igloos & Loups', richesPercent: 72,
+            hostility: 'Neige poudreuse & Loups', hostilityPercent: 45
+          },
+          resources: ['Bois de sapin abondant', 'Igloos (sous-sol avec alambic & Pomme dorée)', 'Baies sucrées', 'Loups & Renards blancs'],
+          mobsPresent: ['Loup', 'Renard polaire', 'Lapin', 'Vagabond (Stray) dans les plaines gelées voisines'],
+          weaknesses: [
+            'La Neige poudreuse (sur les pentes/montagnes proches) t’engloutit et te gèle à mort sans Bottes en cuir !',
+            'Les buissons de baies sucrées ralentissent et infligent des dégâts si tu cours dedans.',
+            'Les Vagabonds (Strays) des biomes neigeux voisins tirent des flèches de Lenteur très pénibles.',
+            'Frapper un seul Loup provoque toute la meute.'
+          ],
+          gear: 'Bottes en cuir (anti-neige poudreuse), Os (apprivoiser des loups), Torches, Pelle.',
+          tip: 'Sous le tapis rouge d’un Igloo, vérifie toujours s’il y a une trappe : 50 % cachent un laboratoire secret avec une Pomme dorée !',
+          mission: 'Trouve un Igloo avec un sous-sol secret et apprivoise une meute de 3 Loups !',
+          tags: ['neige', 'igloo', 'loup', 'renard', 'sapin', 'overworld']
+        },
+
+        /* ========================= ARMES & COMBAT (10) ========================= */
+        {
+          id: 'weapon-netherite-sword',
+          page: 'weapons',
+          name: 'Épée en Netherite',
+          subCategory: 'Corps-à-corps',
+          badgeText: 'Corps-à-corps',
+          badgeColor: 'bg-purple-600 text-white',
+          imageKey: 'netherite_sword',
+          summary: 'L’épée ultime de Minecraft : puissante, ultra-durable et totalement indestructible dans la lave !',
+          stats: {
+            damage: '8 (4 ❤️)', damagePercent: 76,
+            speed: '1.6 / s (Rapide)', speedPercent: 85,
+            durability: '2 031 coups', durabilityPercent: 100
+          },
+          obtain: 'Table de forge : Épée en Diamant + 1 Lingot de Netherite + 1 Modèle d’amélioration (Bastion).',
+          strengths: [
+            'Ne brûle JAMAIS si elle tombe dans le feu ou la lave.',
+            'Attaque balayante (Sweep) redoutable contre les groupes de mobs.',
+            'Durabilité colossale (2 031) et haute compatibilité d’enchantements (Butin III, Aura de Feu).'
+          ],
+          weaknesses: [
+            'Très coûteuse et longue à obtenir (nécessite d’explorer un Bastion et de miner des Débris antiques).',
+            'Portée limitée au corps-à-corps pur.',
+            'Ne désactive pas le bouclier adverse (contrairement à une Hache).'
+          ],
+          enchantments: ['Tranchant V / Châtiment V', 'Butin III', 'Affilage III', 'Aura de Feu II', 'Solidité III', 'Raccommodage'],
+          tip: 'Fabrique une épée Tranchant V pour le polyvalent et une seconde Châtiment V pour écraser le Wither et les morts-vivants.',
+          tags: ['netherite', 'epee', 'lave', 'tranchant', 'melee']
+        },
+        {
+          id: 'weapon-diamond-sword',
+          page: 'weapons',
+          name: 'Épée en Diamant',
+          subCategory: 'Corps-à-corps',
+          badgeText: 'Corps-à-corps',
+          badgeColor: 'bg-mc-diamond text-black',
+          imageKey: 'diamond_sword',
+          summary: 'L’arme légendaire et fiable par excellence : facile à obtenir, rapide et dévastatrice une fois enchantée.',
+          stats: {
+            damage: '7 (3.5 ❤️)', damagePercent: 68,
+            speed: '1.6 / s (Rapide)', speedPercent: 85,
+            durability: '1 561 coups', durabilityPercent: 80
+          },
+          obtain: 'Table de craft : 2 Diamants + 1 Bâton (ou achetée à un Forgeron d’armes maître).',
+          strengths: [
+            'Meilleur rapport puissance / facilité d’obtention du jeu.',
+            'Attaque rapide + balayage de zone (Sweeping Edge) idéal pour les fermes à XP.',
+            'Peut être améliorée plus tard en Netherite tout en gardant ses enchantements !'
+          ],
+          weaknesses: [
+            'Détruite par la lave ou le feu si tu meurs dans le Nether.',
+            'Bloquée par les boucliers en PvP (contrairement à une Hache).',
+            '1 point de dégâts brut de moins que la Netherite.'
+          ],
+          enchantments: ['Tranchant V', 'Butin III', 'Affilage III', 'Solidité III', 'Raccommodage'],
+          tip: 'Enchante ton Épée en Diamant au maximum avant de la passer en Netherite : elle conservera tous ses enchantements !',
+          tags: ['diamant', 'epee', 'melee', 'tranchant', 'butin']
+        },
+        {
+          id: 'weapon-netherite-axe',
+          page: 'weapons',
+          name: 'Hache en Netherite',
+          subCategory: 'Corps-à-corps',
+          badgeText: 'Corps-à-corps',
+          badgeColor: 'bg-rose-600 text-white',
+          imageKey: 'netherite_axe',
+          summary: 'Frappe lourde dévastatrice capable de briser instantanément la garde d’un bouclier adverse.',
+          stats: {
+            damage: '10 (5 ❤️ / 15 critique)', damagePercent: 90,
+            speed: '1.0 / s (Lente)', speedPercent: 50,
+            durability: '2 031 coups', durabilityPercent: 100
+          },
+          obtain: 'Table de forge : Hache en Diamant + 1 Lingot de Netherite + Modèle d’amélioration.',
+          strengths: [
+            'Dégâts par coup unique supérieurs à l’Épée (10 de base, jusqu’à 15+ en coup critique sauté !).',
+            'Désactive le Bouclier d’un adversaire pendant 5 secondes entières.',
+            'Résiste à la lave et sert aussi d’outil ultra-rapide pour le bois.'
+          ],
+          weaknesses: [
+            'Temps de recharge nettement plus lent (1.0 coup/sec) : demande un bon timing.',
+            'Impossible d’y mettre Butin (Looting), Aura de Feu ou Affilage (pas de frappe de zone).',
+            'Perd 2 points de durabilité par coup porté en combat.'
+          ],
+          enchantments: ['Tranchant V / Châtiment V', 'Efficacité V', 'Solidité III', 'Raccommodage'],
+          tip: 'Saute et frappe en redescendant avec une Hache Tranchant V pour éliminer la plupart des mobs standards en un seul coup critique !',
+          tags: ['hache', 'bouclier', 'critique', 'netherite', 'pvp']
+        },
+        {
+          id: 'weapon-bow',
+          page: 'weapons',
+          name: "L'Arc",
+          subCategory: 'Distance',
+          badgeText: 'Distance',
+          badgeColor: 'bg-mc-emerald text-white',
+          imageKey: 'bow',
+          summary: 'L’arme à distance incontournable : neutralise Creepers, Ghasts, Blazes et le Dragon sans jamais approcher.',
+          stats: {
+            damage: '6 à 10 (25 avec Puissance V)', damagePercent: 86,
+            speed: '~1.0 s de charge', speedPercent: 65,
+            durability: '384 tirs', durabilityPercent: 35
+          },
+          obtain: 'Table de craft : 3 Bâtons + 3 Ficelles (ou looté sur des Squelettes).',
+          strengths: [
+            'Dégâts colossaux une fois enchanté Puissance V (tue presque tous les mobs en 1 flèche).',
+            'L’enchantement Infinité permet de tirer à l’infini avec une seule flèche dans l’inventaire.',
+            'Flamme cuit instantanément la viande des animaux chassés.'
+          ],
+          weaknesses: [
+            'Ralentit fortement le joueur pendant qu’il tend la corde.',
+            'Inefficace contre les Endermen (ils se téléportent) et le Wither sous 50 % de PV.',
+            'Infinité et Raccommodage (Mending) sont mutuellement exclusifs : il faut choisir !'
+          ],
+          enchantments: ['Puissance V', 'Flamme', 'Frappe II (Punch)', 'Solidité III', 'Infinité OU Raccommodage'],
+          tip: 'Pour l’exploration quotidienne, Infinité est ultra pratique car une seule flèche suffit ; garde un arc Raccommodage pour les longs combats.',
+          tags: ['distance', 'fleches', 'puissance', 'infinité', 'flamme']
+        },
+        {
+          id: 'weapon-crossbow',
+          page: 'weapons',
+          name: "L'Arbalète",
+          subCategory: 'Distance',
+          badgeText: 'Distance',
+          badgeColor: 'bg-mc-xp text-black',
+          imageKey: 'crossbow',
+          summary: 'Arme tactique capable de rester chargée dans la barre, de tirer 3 flèches à la fois ou des fusées explosives !',
+          stats: {
+            damage: '9 (jusqu’à 18+ en fusée)', damagePercent: 82,
+            speed: '1.25 s (0.5 s Charge Rapide III)', speedPercent: 72,
+            durability: '465 tirs', durabilityPercent: 42
+          },
+          obtain: 'Table de craft : 3 Bâtons, 2 Ficelles, 1 Lingot de fer, 1 Crochet (ou loot de Pillards).',
+          strengths: [
+            'Peut être chargée à l’avance et conservée prête à tirer dans plusieurs emplacements de la barre !',
+            'Perforation IV traverse les Boucliers et plusieurs ennemis alignés.',
+            'Compatible avec les Fusées de feu d’artifice (7 étoiles = dégâts de zone monstrueux).'
+          ],
+          weaknesses: [
+            'Ne peut pas recevoir Puissance, Flamme ni Infinité.',
+            'Rechargement très lent sans l’enchantement Charge Rapide III.',
+            'Les fusées de combat consomment beaucoup de poudre à canon et de colorants.'
+          ],
+          enchantments: ['Charge Rapide III', 'Tir Multiple OU Perforation IV', 'Solidité III', 'Raccommodage'],
+          tip: 'Place des fusées explosives (avec 7 étoiles de feu d’artifice) dans ta main secondaire et tire avec Tir Multiple : un vrai lance-roquettes !',
+          tags: ['arbalete', 'distance', 'fusee', 'perforation', 'pillard']
+        },
+        {
+          id: 'weapon-trident',
+          page: 'weapons',
+          name: 'Le Trident',
+          subCategory: 'Spéciales',
+          badgeText: 'Spéciale',
+          badgeColor: 'bg-teal-500 text-black',
+          imageKey: 'trident',
+          summary: 'Relique marine polyvalente (mêlée + lancer) qui permet de voler sous la pluie ou d’invoquer la foudre !',
+          stats: {
+            damage: '9 (mêlée) / 8 (lancé)', damagePercent: 80,
+            speed: '1.1 / s', speedPercent: 60,
+            durability: '250 utilisations', durabilityPercent: 25
+          },
+          obtain: 'Butin rare sur les Noyés (Drowned) portant un Trident (jusqu’à ~11.5 % avec Butin III).',
+          strengths: [
+            'Avec Impulsion III (Riptide) + Élytres, te propulse à vitesse supersonique sous la pluie ou dans l’eau.',
+            'Avec Canalisation (Channeling), invoque la foudre par temps d’orage (idéal pour les Creepers Chargés !).',
+            'Loyauté III le fait revenir automatiquement dans ta main après chaque lancer.'
+          ],
+          weaknesses: [
+            'Très faible durabilité (250) : Raccommodage + Solidité III sont quasi obligatoires.',
+            'Si tu le lances dans le Vide de L’End sans précaution, même Loyauté ne le sauve pas toujours.',
+            'Impulsion est inutilisable par temps sec et est incompatible avec Loyauté/Canalisation.'
+          ],
+          enchantments: ['Loyauté III + Canalisation (combat) OU Impulsion III (vol)', 'Empalement V', 'Solidité III', 'Raccommodage'],
+          tip: 'Aie idéalement DEUX Tridents : un avec Impulsion III pour voyager avec tes Élytres, et un avec Loyauté + Canalisation pour le combat.',
+          tags: ['trident', 'eau', 'foudre', 'impulsion', 'loyaute', 'noye']
+        },
+        {
+          id: 'weapon-mace',
+          page: 'weapons',
+          name: 'La Masse (Mace 1.21)',
+          subCategory: 'Spéciales',
+          badgeText: 'Spéciale 1.21',
+          badgeColor: 'bg-sky-400 text-black',
+          imageKey: 'mace',
+          summary: 'L’arme explosive de la 1.21 : plus tu tombes de haut avant de frapper, plus ses dégâts deviennent INFINIS !',
+          stats: {
+            damage: '6 de base → ∞ en chute !', damagePercent: 100,
+            speed: '0.6 / s (Très lente)', speedPercent: 32,
+            durability: '500 coups', durabilityPercent: 48
+          },
+          obtain: 'Table de craft : 1 Noyau lourd (Chambres des Épreuves — Coffre funeste) + 1 Bâton de Breeze.',
+          strengths: [
+            'Peut one-shot un Warden ou un Wither si tu frappes après une chute suffisamment haute !',
+            'Toucher une cible en tombant annule 100 % de tes propres dégâts de chute et projette les mobs alentour.',
+            'Combinée aux Charges de Vent (Wind Charges) ou Rafale III, tu rebondis dans les airs en boucle.'
+          ],
+          weaknesses: [
+            'Vitesse d’attaque au sol très lente (0.6/s) et dégâts moyens (6) sans chute.',
+            'Si tu RATES ta cible en plein saut, tu encaisses 100 % des dégâts de chute (souvent fatal) !',
+            'Extrêmement rare à obtenir (Noyau lourd dans les coffres funestes des Trial Chambers).'
+          ],
+          enchantments: ['Densité V (dégâts de chute)', 'Brèche IV (perce armure)', 'Rafale III (rebond)', 'Solidité III', 'Raccommodage'],
+          tip: 'Associe la Masse avec des Charges de Vent (Wind Charges) et garde un Seau d’eau en secours au cas où tu manquerais ton coup !',
+          tags: ['mace', 'masse', '1.21', 'chute', 'breeze', 'one-shot']
+        },
+        {
+          id: 'weapon-shield',
+          page: 'weapons',
+          name: 'Le Bouclier',
+          subCategory: 'Spéciales',
+          badgeText: 'Défense',
+          badgeColor: 'bg-amber-500 text-black',
+          imageKey: 'shield',
+          summary: 'L’équipement le plus rentable du jeu : pour 1 seul lingot de fer, il bloque flèches, coups et explosions de Creeper !',
+          stats: {
+            damage: '0 (100 % blocage frontal)', damagePercent: 55,
+            speed: 'Instantané (0.25 s)', speedPercent: 95,
+            durability: '336 points', durabilityPercent: 35
+          },
+          obtain: 'Table de craft : 6 Planches de bois + 1 Lingot de fer (personnalisable avec une Bannière).',
+          strengths: [
+            'Bloque 100 % des dégâts frontaux des explosions de Creeper, flèches et attaques de mêlée.',
+            'Renvoie les flèches vers les Squelettes et repousse les assaillants.',
+            'Craftable dès les 5 premières minutes d’une nouvelle survie.'
+          ],
+          weaknesses: [
+            'Désactivé pendant 5 secondes par un coup de Hache (Piglins Brutes, Vindicateurs, joueurs).',
+            'Ne protège pas le dos, ni contre l’Onde Sonique du Warden, les potions jetables ou la lave.',
+            'Ralentit fortement ta vitesse de déplacement tant qu’il est levé.'
+          ],
+          enchantments: ['Solidité III', 'Raccommodage (via Enclume + livres)'],
+          tip: 'Combine ton Bouclier avec une Bannière stylée dans la table de craft pour afficher ton propre blason au combat !',
+          tags: ['defense', 'bouclier', 'creeper', 'squelette', 'fer']
+        },
+        {
+          id: 'weapon-end-crystal',
+          page: 'weapons',
+          name: "Cristal de l'End",
+          subCategory: 'Spéciales',
+          badgeText: 'Explosif PvP',
+          badgeColor: 'bg-fuchsia-600 text-white',
+          imageKey: 'end_crystal',
+          summary: 'L’arme explosive la plus redoutée du PvP avancé : posé sur de l’obsidienne, il détone instantanément au moindre coup.',
+          stats: {
+            damage: 'Jusqu’à 97.5 (Explosion)', damagePercent: 100,
+            speed: 'Instantané (Pose + Coup)', speedPercent: 90,
+            durability: 'Usage unique', durabilityPercent: 10
+          },
+          obtain: 'Table de craft : 7 Verres + 1 Œil de l’Ender + 1 Larme de Ghast.',
+          strengths: [
+            'Puissance d’explosion supérieure à la TNT (puissance 6 contre 4 pour la TNT).',
+            'Détone instantanément sans délai dès qu’on le frappe ou qu’on lui tire une flèche.',
+            'Capable d’éliminer un joueur en armure Netherite complète en 2 explosions bien placées.'
+          ],
+          weaknesses: [
+            'Ne peut être posé QUE sur de l’Obsidienne ou de la Bedrock.',
+            'Extrêmement dangereux pour son propre utilisateur : si tes pieds sont au même niveau, tu exploses aussi !',
+            'Coûteux à produire en masse (nécessite des Larmes de Ghast et Perles de l’Ender).'
+          ],
+          enchantments: ['Aucun (combiné avec Armure Protection contre les Explosions IV + Totem d’Immortalité)'],
+          tip: 'Place toujours un bloc d’obsidienne entre tes pieds et le Cristal : les explosions calculent les dégâts à hauteur des pieds !',
+          tags: ['cristal', 'pvp', 'explosion', 'obsidienne', 'totem']
+        },
+        {
+          id: 'weapon-iron-sword',
+          page: 'weapons',
+          name: 'Épée en Fer',
+          subCategory: 'Corps-à-corps',
+          badgeText: 'Début de partie',
+          badgeColor: 'bg-slate-400 text-black',
+          imageKey: 'iron_sword',
+          summary: 'La fidèle compagne des débuts d’aventure : économique, rapide et suffisante pour sécuriser tes premières grottes.',
+          stats: {
+            damage: '6 (3 ❤️)', damagePercent: 58,
+            speed: '1.6 / s (Rapide)', speedPercent: 85,
+            durability: '250 coups', durabilityPercent: 25
+          },
+          obtain: 'Table de craft : 2 Lingots de fer + 1 Bâton (ou coffres de villages/forges).',
+          strengths: [
+            'Très facile à fabriquer dès les premières minutes de jeu.',
+            'Même vitesse d’attaque rapide (1.6/s) et même balayage que les épées supérieures.',
+            'Idéale pour économiser sa durabilité de Diamant sur les petits mobs.'
+          ],
+          weaknesses: [
+            'Durabilité limitée (250 coups) : s’use vite lors d’une longue exploration de caverne.',
+            'Dégâts trop faibles face aux Boss, aux Piglins Brutes ou dans les Bastions.',
+            'Peu rentable d’y investir des enchantements rares (mieux vaut attendre le Diamant).'
+          ],
+          enchantments: ['Tranchant I–II (enchantement niveau 1 économique)', 'Solidité I'],
+          tip: 'Ne gaspille pas 30 niveaux d’XP sur une Épée en Fer : mets-lui juste un petit enchantement niveau 1 le temps de trouver 2 diamants.',
+          tags: ['fer', 'epee', 'debutant', 'melee', 'craft']
+        },
+
+        /* ==================== MOBS v2 (8 ajouts) ==================== */
+        {
+          id: 'mob-spider',
+          page: 'mobs',
+          name: 'L’Araignée',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'spider',
+          summary: 'Grimpatrice agressive la nuit qui t’immobilise dans sa toile. Elle redevient neutre dès que le soleil se lève !',
+          stats: {
+            hp: 16, hpLabel: '16 PV (8 ❤️)', hpPercent: 15,
+            damage: '2 (Normal) / 3 (Difficile)', damagePercent: 20,
+            danger: 2.5, dangerLabel: '2.5 / 5 — Modéré'
+          },
+          spawn: 'Overworld (nuit, zones sombres) — devient Neutre de jour',
+          strengths: [
+            'Grimpe sur tous les murs et plafonds : aucun abri en hauteur !',
+            'Sa toile immobilise instantanément quiconque marche dedans.',
+            'Se faufile par les trous de 1 bloc de large, presque invisible.'
+          ],
+          weaknesses: [
+            'Ne grimpe pas sur un mur surmonté d’un débord de verre ou de dalles.',
+            'De jour, elle ne t’attaque que si tu la frappes d’abord.',
+            'Très lente quand elle est mouillée par la pluie ou l’eau.',
+            'Son corps large ne passe pas dans les passages de 1 bloc de haut.'
+          ],
+          drops: 'Ficelle (0–2), Œil d’Araignée (0–1 avec Butin) • 5 XP',
+          tip: 'Place des dalles en débord tout autour de ta base : les Araignées ne peuvent plus grimper et glissent !',
+          tags: ['toile', 'ficelle', 'escalade', 'nuit', 'mur']
+        },
+        {
+          id: 'mob-witch',
+          page: 'mobs',
+          name: 'La Sorcière',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'witch',
+          summary: 'Lanceuse de potions vêtue de violet : elle te ralentit, t’empoisonne et se soigne à coups de fioles.',
+          stats: {
+            hp: 26, hpLabel: '26 PV (13 ❤️)', hpPercent: 23,
+            damage: 'Potions (poison, lenteur, dégâts)', damagePercent: 30,
+            danger: 3, dangerLabel: '3 / 5 — Dangereux'
+          },
+          spawn: 'Cabanes des Marais (Swamp Huts) et Raids sur les villages',
+          strengths: [
+            'Lance des potions qui te ralentissent, t’empoisonnent et te blessent.',
+            'Se soigne instantanément avec une Potion de Régénération quand elle est blessée.',
+            'Résiste à 85 % des dégâts de Magie et est immunisée contre le Poison.'
+          ],
+          weaknesses: [
+            'Un Bouclier levé bloque toutes ses potions jetables !',
+            'Interromps-la pendant qu’elle boit sa potion (3 s d’arrêt).',
+            'Bois du Lait pour purger instantanément Poison et Lenteur.'
+          ],
+          drops: 'Sucre, Bâton de Blaze, Poudre à canon, Redstone + Potions (si tuée en pleine gorgée)',
+          tip: 'Ne fonce jamais tout droit : contourne-la pendant qu’elle vise, puis frappe au corps-à-corps.',
+          tags: ['potion', 'poison', 'marais', 'raid', 'fiole']
+        },
+        {
+          id: 'mob-elder-guardian',
+          page: 'mobs',
+          name: 'L’Ancien Gardien',
+          subCategory: 'Hostiles',
+          badgeText: 'Mini-Boss',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'elder_guardian',
+          summary: 'Le colossal poisson-monument de l’Océan : 3 par temple, il te maudit à distance avec sa Fatigue de Minage !',
+          stats: {
+            hp: 80, hpLabel: '80 PV (40 ❤️)', hpPercent: 64,
+            damage: 'Laser 6–8 + Fatigue de Minage', damagePercent: 60,
+            danger: 4.5, dangerLabel: '4.5 / 5 — Très dangereux'
+          },
+          spawn: 'Monuments sous-marins (3 Anciens Gardiens par temple)',
+          strengths: [
+            'Faisceau laser qui traverse l’eau et touche même à travers les blocs.',
+            'Applique la Malédiction de Fatigue de Minage V pendant 5 minutes autour du temple.',
+            'Épines dorsales : le frapper au corps-à-corps inflige des dégâts de represailles.'
+          ],
+          weaknesses: [
+            'Potion de Respiration aquatique + Armure en fer minimum pour survivre en profondeur.',
+            'Bois du Lait pour purger sa Fatigue de Minage.',
+            'Frappe-le pendant sa phase de recharge (5 s), Bouclier levé entre deux lasers.'
+          ],
+          drops: 'Éponge humide, Poisson, Éclats & Cristaux de Prismarine • 10 XP',
+          tip: 'Place une Porte posée sous l’eau : elle crée une bulle d’air où respirer et tirer en sécurité !',
+          tags: ['monument', 'eponge', 'fatigue', 'laser', 'prismarine']
+        },
+        {
+          id: 'mob-shulker',
+          page: 'mobs',
+          name: 'Le Shulker',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'shulker',
+          summary: 'Boîte camouflée de l’End : immobile et fermée, elle te propulse en l’air avec sa balle téléguidée !',
+          stats: {
+            hp: 30, hpLabel: '30 PV (15 ❤️)', hpPercent: 26,
+            damage: '4 + Lévitation 10 s', damagePercent: 35,
+            danger: 3.5, dangerLabel: '3.5 / 5 — Redoutable'
+          },
+          spawn: 'L’End (Villes et Navires de l’End), fixé à un bloc',
+          strengths: [
+            'Ses projectiles à tête chercheuse infligent la Lévitation : chute potentiellement mortelle !',
+            'Fermé, il est presque intouchable et se fond dans le décor.',
+            'Se téléporte ailleurs si l’on casse son bloc de support.'
+          ],
+          weaknesses: [
+            'Ses billes se dévient à l’épée ou se bloquent derrière un simple bloc de couverture.',
+            'Il ne tire qu’ouvert : attaque pendant ses 5 secondes d’ouverture.',
+            'Le Bouclier bloque totalement ses projectiles à distance.'
+          ],
+          drops: 'Coquille de Shulker (0–1, jusqu’à 4 avec Butin III) • 5 XP',
+          tip: 'Fais-toi toucher volontairement : la Lévitation te fait flotter jusqu’aux îles de l’End sans construire de pont !',
+          tags: ['levitation', 'coquille', 'end', 'boite', 'teleportation']
+        },
+        {
+          id: 'mob-wither-skeleton',
+          page: 'mobs',
+          name: 'Squelette Wither',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'wither_skeleton',
+          summary: 'Squelette noir de 2 blocs hantant les Forteresses du Nether : son épée de pierre te condamne au Wither !',
+          stats: {
+            hp: 20, hpLabel: '20 PV (10 ❤️)', hpPercent: 18,
+            damage: '8 + effet Wither (10 s)', damagePercent: 66,
+            danger: 4, dangerLabel: '4 / 5 — Élevé'
+          },
+          spawn: 'Forteresses du Nether (souvent en meute)',
+          strengths: [
+            'Son coup applique le Wither II : tu perds de la vie pendant 10 secondes, même en armure.',
+            'Grand de 2 blocs, rapide et agressif en meute dans les couloirs étroits.',
+            'Totalement immunisé au feu et à la lave.'
+          ],
+          weaknesses: [
+            'Sa grande taille le bloque sous les plafonds de 2 blocs : creuse des passages bas pour le frapper en sécurité.',
+            'L’enchantement Châtiment (Smite) inflige des dégâts massifs sur ce mort-vivant.',
+            'Bois du Lait + potion de soin pour contrer son effet Wither.'
+          ],
+          drops: 'Charbon, Os, Crâne de Squelette Wither (2.5 % + Butin III → 5.5 %) • Arc usé rare',
+          tip: '3 Crânes + 4 Sables des Âmes + Soul Soil = invoque le boss Wither et fabrique enfin ta Balise !',
+          tags: ['wither', 'nether', 'crane', 'meute', 'forteresse']
+        },
+        {
+          id: 'mob-drowned',
+          page: 'mobs',
+          name: 'Le Noyé',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'drowned',
+          summary: 'Zombie aquatique rôdant dans les océans, lacs et rivières. Il ne brûle JAMAIS au soleil et nage plus vite que toi !',
+          stats: {
+            hp: 20, hpLabel: '20 PV (10 ❤️)', hpPercent: 18,
+            damage: '3–4 (+ 9 si Trident)', damagePercent: 30,
+            danger: 2.5, dangerLabel: '2.5 / 5 — Modéré'
+          },
+          spawn: 'Toutes les eaux (océans, rivières, lacs), surtout la nuit',
+          strengths: [
+            'Sous l’eau, il nage plus vite qu’un joueur mal équipé.',
+            '10 % portent un Trident : leur lancer est redoutable en immersion.',
+            'Ne brûle jamais au soleil et surgit des profondeurs par groupes.'
+          ],
+          weaknesses: [
+            'La Respiration aquatique (potion ou casque enchanté) change tout sous l’eau.',
+            'Un mur de verre ou de Pierre lumineuse te protège : il ne casse pas les blocs.',
+            'Châtiment (Smite) très efficace, comme tout mort-vivant.'
+          ],
+          drops: 'Chair putréfiée, Lingot de fer, Trident (rare), Coquille de Nautile (si porteur)',
+          tip: 'Place une Porte au fond de l’eau : elle crée une poche d’air pour respirer, tirer et miner en paix !',
+          tags: ['eau', 'ocean', 'trident', 'zombie', 'nautile']
+        },
+        {
+          id: 'mob-magma-cube',
+          page: 'mobs',
+          name: 'Cube de Magma',
+          subCategory: 'Hostiles',
+          badgeText: 'Hostile',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'magma_cube',
+          summary: 'Blob enflammé du Nether qui se scinde en petits cubes sautillants à chaque coup reçu… comme les Slimes, mais en brûlant !',
+          stats: {
+            hp: 16, hpLabel: '1 à 16 PV (selon la taille)', hpPercent: 14,
+            damage: '6 / 4 / 2 selon la taille', damagePercent: 32,
+            danger: 2.5, dangerLabel: '2.5 / 5 — Modéré'
+          },
+          spawn: 'Deltas de Basalte, Bastions et alentours des Générateurs de Blazes',
+          strengths: [
+            'Se divise en 2 à 4 cubes plus petits et plus rapides quand tu en tues un.',
+            'Totalement immunisé au feu et à la lave.',
+            'Le grand saute par-dessus les murs de 2 blocs et amortit ses chutes.'
+          ],
+          weaknesses: [
+            'Les petits cubes (1 PV) meurent d’un simple coup de main.',
+            'Leur saut est prévisible : écarte-toi quand ils s’aplatissent pour bondir.',
+            'Une armure en fer suffit ; frappe par le haut ou avec une arme à distance pour limiter la scission.'
+          ],
+          drops: 'Poudre de Magma (0–1 par cube) — pour la Pierre lumineuse et les Potions de Résistance au feu',
+          tip: 'Creuse une fosse d’un bloc : les petits Cubes y seront coincés et massacrables d’un seul coup à chaque fois.',
+          tags: ['magma', 'nether', 'blob', 'feu', 'division']
+        },
+        {
+          id: 'mob-allay',
+          page: 'mobs',
+          name: 'L’Allay',
+          subCategory: 'Pacifiques',
+          badgeText: 'Pacifique',
+          badgeColor: 'bg-mc-emerald text-white',
+          imageKey: 'allay',
+          summary: 'Petite fée bleue volante qui collecte pour toi tous les objets du même type qui tombent autour d’elle. Magique !',
+          stats: {
+            hp: 20, hpLabel: '20 PV (10 ❤️)', hpPercent: 18,
+            damage: '0 — totalement inoffensif', damagePercent: 0,
+            danger: 0, dangerLabel: '0 / 5 — Anodin'
+          },
+          spawn: 'Cellules des Postes de Pillards et Paniers de bois des avant-postes',
+          strengths: [
+            'Donne-lui UN objet (ex : Diamant) et il ramasse tout objet identique dans un rayon énorme.',
+            'Transporte jusqu’à un stack complet puis te le rapporte (ou le dépose sur un Bloc Musical).',
+            'Danse et se duplique près d’un Jukebox avec une Améthyste : de quoi créer une équipe entière !'
+          ],
+          weaknesses: [
+            'Ne sait ni casser de blocs, ni ouvrir des coffres, ni combattre.',
+            'Fragile : éloigne-le de la lave, des Ghasts et du Warden.',
+            'Ne collecte que des objets qui tombent au sol (posés au sol ou dans des coffres, jamais).'
+          ],
+          drops: 'Rien — libère-le plutôt de sa cage et gagne un assistant fidèle à vie !',
+          tip: 'Allay + Bloc Musical = tri de butin automatique : il dépose tout ce qu’il ramasse sur le Bloc Musical. Ferme d’XP garantie !',
+          tags: ['allay', 'collection', 'jukebox', 'volant', 'butin']
+        },
+
+        /* ==================== MONDES v2 (3 ajouts) ==================== */
+        {
+          id: 'world-warped-forest',
+          page: 'worlds',
+          name: 'Forêt Biscornue Tordue',
+          subCategory: 'Nether & End',
+          badgeText: 'Biome Nether',
+          badgeColor: 'bg-mc-diamond text-black',
+          imageKey: 'warped_forest',
+          summary: 'Le biome le plus paisible du Nether : végétation turquoise, des Endermen en masse mais zéro Ghast — le paradis du fermier de Perles !',
+          stats: {
+            danger: 2, dangerLabel: '2 / 5 — Endermen uniquement', dangerPercent: 40,
+            riches: '45%', richesLabel: 'Fungus & Perles', richesPercent: 45,
+            hostility: 'Endermen uniquement', hostilityPercent: 25
+          },
+          resources: ['Champignons Tordus', 'Racines Tordues', 'Blocs Biscornus Tordus', 'Vignes Pleurantes (Weeping Vines)'],
+          mobsPresent: ['Enderman (seul spawn de surface)', 'Strider sur la lave à proximité'],
+          weaknesses: [
+            'Densité énorme d’Endermen : porte une Citrouille sculptée pour explorer sans les déclencher.',
+            'Aucun bois classique : les troncs Tordus servent à fabriquer planches et outils.',
+            'Le terrain haché par le netherrack cache des chutes vers la lave.'
+          ],
+          gear: 'Citrouille sculptée, Armure en diamant, Blocs de construction (Cobblestone), Seau de lave.',
+          tip: 'L’endroit PARFAIT pour farmer des Perles de l’Ender : construis un toit à 2 blocs de haut et combat-les de dessus en paix !',
+          mission: 'Construis une micro-ferme à Endermen ici et rapporte 10 Perles de l’Ender pour tes Yeux de l’Ender.',
+          tags: ['nether', 'enderman', 'turquoise', 'perle', 'fungus']
+        },
+        {
+          id: 'world-basalt-deltas',
+          page: 'worlds',
+          name: 'Deltas de Basalte',
+          subCategory: 'Nether & End',
+          badgeText: 'Biome Nether',
+          badgeColor: 'bg-mc-danger text-white',
+          imageKey: 'basalt_deltas',
+          summary: 'Désert volcanique de basalte gris aux colonnes immenses, lacs de lave et cendres flottantes. Hospitalité : 0/10.',
+          stats: {
+            danger: 3.5, dangerLabel: '3.5 / 5 — Volcanique', dangerPercent: 70,
+            riches: '60%', richesLabel: 'Basalte & Netherite', richesPercent: 60,
+            hostility: 'Ghasts & Cubes de Magma', hostilityPercent: 70
+          },
+          resources: ['Basalte & Pierre Noire (Blackstone)', 'Débris antiques (Netherite, couches 8–22)', 'Or du Nether'],
+          mobsPresent: ['Cube de Magma (extrêmement fréquent)', 'Ghast', 'Strider sur les coulées'],
+          weaknesses: [
+            'Terrain chaotique : les gorges de lave et les falaises de basalte piègent les explorateurs.',
+            'La reproduction massive de Cubes de Magma rend l’exploration exténuante.',
+            'Le brouillard de cendres réduit fortement la visibilité : les Ghasts t’attaquent sans prévenir.'
+          ],
+          gear: 'Pioche en diamant, Bottes de Chute amortie, Potion de Résistance au feu, Seau de lave pour descendre en sécurité.',
+          tip: 'Creuse le basalte pour trouver des Débris antiques : la Netherite se cache souvent sous les formations de basalte !',
+          mission: 'Collecte 4 Débris antiques dans le basalte et extrais un Lingot de Netherite (4 Débris = 1 Lingot).',
+          tags: ['basalte', 'blackstone', 'netherite', 'ghast', 'volcan']
+        },
+        {
+          id: 'world-ice-spikes',
+          page: 'worlds',
+          name: 'Piques de Glace',
+          subCategory: 'Overworld',
+          badgeText: 'Biome rare',
+          badgeColor: 'bg-mc-diamond text-black',
+          imageKey: 'ice_spikes',
+          summary: 'Le biome le plus rare de l’Overworld : tours de glace géantes surgissant de la toundra enneigée. Spectaculaire !',
+          stats: {
+            danger: 1.5, dangerLabel: '1.5 / 5 — Paisible', dangerPercent: 30,
+            riches: '35%', richesLabel: 'Glace & Iglous', richesPercent: 35,
+            hostility: 'Mobs classiques la nuit', hostilityPercent: 25
+          },
+          resources: ['Glace compactée (Packed Ice)', 'Neige poudreuse', 'Iglous (avec sous-sol secret)', 'Blocs de Neige'],
+          mobsPresent: ['Loups, ours polaires, renards arctiques', 'Strays (Squelettes de la neige)', 'Zombies & Creepers (nuit)'],
+          weaknesses: [
+            'La glace compactée est ultra-glissante : freine longtemps avant les virages en sprint.',
+            'La Neige poudreuse est un piège : tu peux y sombrer et te blesser au fond.',
+            'Les Strays tirent des flèches de Lenteur : garde un Bouclier ou une Armure légère.'
+          ],
+          gear: 'Bottes de Neige (Potion de Vitesse), Lit, Pioche en fer pour récupérer la glace sans la casser.',
+          tip: 'Un Iglou avec un tapis rouge cache un sous-sol secret avec Coffre, Table de craft ET Fiole : vérifie toujours la moquette !',
+          mission: 'Trouve un Iglou secret avec sa salle cachée et repars avec le trésor de son sous-sol intact.',
+          tags: ['glace', 'neige', 'iglou', 'rare', 'toundra']
+        },
+
+        /* ==================== ARMES v2 (3 ajouts) ==================== */
+        {
+          id: 'weapon-totem',
+          page: 'weapons',
+          name: 'Totem d’Immortalité',
+          subCategory: 'Spéciales',
+          badgeText: 'Sauve-vie',
+          badgeColor: 'bg-mc-xp text-black',
+          imageKey: 'totem',
+          summary: 'La relique qui cheat la mort : tenue en main, elle te laisse à 1 PV au lieu de mourir et te couvre de buffs salvateurs !',
+          stats: {
+            damage: '0 (effet de sauvegarde)', damagePercent: 10,
+            speed: 'Instantané (se consomme seul)', speedPercent: 100,
+            durability: 'Usage unique', durabilityPercent: 10
+          },
+          obtain: 'Raids de Pillards (Capitaines) et Coffres d’Ancient Cities.',
+          strengths: [
+            'Annule une mort : te laisse à 1 PV + Régénération II (40 s) + Absorption II + Anti-Feu.',
+            'Fonctionne en Main secondaire : occupe ta main principale d’une puissante arme !',
+            'Seul objet capable de sauver d’une chute accidentelle ou d’une explosion surprise.'
+          ],
+          weaknesses: [
+            'Usage unique : consommé à chaque activation, récupère-en plusieurs pour les virées risquées.',
+            'Ne fonctionne pas dans le Vide (gouffre de l’End) ni avec la commande /kill.',
+            'Te laisse à 1 PV : reste tout aussi vulnérable juste après l’activation !'
+          ],
+          enchantments: ['Aucun — fonctionne parfaitement avec une Armure complète Protection IV'],
+          tip: 'Règle 101 du PvP : garde TOUJOURS un Totem en main secondaire. Sans lui, tu n’es qu’une cible fragile avec un beau skin.',
+          tags: ['totem', 'immortalite', 'raid', 'sauvegarde', 'regeneration']
+        },
+        {
+          id: 'weapon-golden-apple',
+          page: 'weapons',
+          name: 'Pomme Dorée',
+          subCategory: 'Spéciales',
+          badgeText: 'Consommable',
+          badgeColor: 'bg-amber-400 text-black',
+          imageKey: 'golden_apple',
+          summary: 'Le snack légendaire : soigne instantanément et donne Absorption et Régénération — ton meilleur allié en plein combat.',
+          stats: {
+            damage: '0 (soigne + buffs)', damagePercent: 15,
+            speed: 'Consommation 1.6 s', speedPercent: 55,
+            durability: 'Consommable', durabilityPercent: 15
+          },
+          obtain: 'Craft : 8 Lingots d’or autour d’une Pomme — loot des Temples, Donjons et Coffres de Bastion.',
+          strengths: [
+            'Restaure plusieurs ❤ instantanément et ajoute 4 ❤ d’Absorption II temporaires.',
+            'Régénération II pendant 5 s + Résistance au Feu pendant 30 s.',
+            'Consommable même à Faim maximum : parfait en plein combat.'
+          ],
+          weaknesses: [
+            'Coût élevé : 8 lingots d’or par pomme — bâtis une Gold Farm avant d’en faire des réserves !',
+            'Ne guérit ni le Poison ni le Wither (réservé à la Pomme enchantée).',
+            '1.6 s de consommation : vulnérable. Mange derrière un mur ou en sprintant latéralement.'
+          ],
+          enchantments: ['Version enchantée (Pomme Enchantée) : Régénération V, Absorption IV, Résistance I pendant 30 s'],
+          tip: 'Mets-en 2–3 dans ta Hotbar AVANT de partir dans le Nether : la différence entre survivre et respawn !',
+          tags: ['pomme', 'or', 'soin', 'regeneration', 'snack']
+        },
+        {
+          id: 'weapon-tnt',
+          page: 'weapons',
+          name: 'TNT',
+          subCategory: 'Spéciales',
+          badgeText: 'Explosif',
+          badgeColor: 'bg-red-600 text-white',
+          imageKey: 'tnt',
+          summary: 'L’explosif iconique : un boom mythique, des cratères légendaires et un minage express (usage raisonnable recommandé !).',
+          stats: {
+            damage: 'Jusqu’à 65 au point zéro', damagePercent: 92,
+            speed: 'Mèche de 4 s', speedPercent: 40,
+            durability: 'Usage unique', durabilityPercent: 10
+          },
+          obtain: 'Craft : 5 Poudres à canon + 4 Sables — amorçable au Briquet, par la Redstone, le feu ou une flèche enflammée.',
+          strengths: [
+            'Détruit la pierre, la terre et de nombreux minerais instantanément (sauf Obsidienne & Bedrock).',
+            'Dans l’eau, détruit AUCUN bloc mais inflige les dégâts : parfait pour tuer sans casser ton paysage.',
+            'Base des canons TNT, des fermes d’XP automatisées et des creusages express de tunnels.'
+          ],
+          weaknesses: [
+            'La mèche de 4 s laisse le temps de s’enfuir… ou de te piéger toi-même !',
+            'Destruction incontrôlée = cratère géant dans ta base chérie.',
+            'Se cumule en chaîne : un seul bloc peut vaporiser une tour de TNT voisine.'
+          ],
+          enchantments: ['Aucun — mais à combiner avec Redstone, Répéteurs et Distributeurs pour des chaînes complexes'],
+          tip: 'Minage express : place un mur de TNT côté grotte, déclenche et recule : les minerais tombent déjà prêts à ramasser !',
+          tags: ['tnt', 'explosion', 'poudre', 'minage', 'redstone']
+        }
+      ];
+
+      /* Configuration des 3 pages et de leurs sous-filtres */
+      const PAGE_CONFIG = {
+        mobs: {
+          title: '⚔️ Les Mobs',
+          subtitle: 'Créatures pacifiques, neutres, hostiles et boss légendaires : maîtrise leurs points faibles pour survivre.',
+          filters: ['Tous', 'Hostiles', 'Neutres', 'Boss', 'Pacifiques', '⭐ Favoris'],
+          unit: 'mobs'
+        },
+        worlds: {
+          title: '🌍 Les Mondes & Biomes',
+          subtitle: 'Dimensions, biomes rares et zones extrêmes : prépare ton équipement avant de franchir le portail.',
+          filters: ['Tous', 'Dimensions', 'Overworld', 'Nether & End', '⭐ Favoris'],
+          unit: 'mondes'
+        },
+        weapons: {
+          title: '🗡️ Les Armes & Combat',
+          subtitle: 'Épées, haches, armes à distance et reliques spéciales : compare leurs dégâts, limites et enchantements.',
+          filters: ['Toutes', 'Corps-à-corps', 'Distance', 'Spéciales', '⭐ Favoris'],
+          unit: 'armes'
+        }
+      };
+
+      /* =====================================================================
+         3. GESTION DE L'ÉTAT & FAVORIS (LOCALSTORAGE SÉCURISÉ)
+         ===================================================================== */
+
+      const STORAGE_KEY = 'mc_dictionnary_favs_v2';
+
+      function loadFavorites() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return new Set();
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? new Set(parsed) : new Set();
+        } catch (err) {
+          return new Set();
+        }
+      }
+
+      function saveFavorites(favSet) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify([...favSet]));
+        } catch (err) {
+          // Ignore les restrictions éventuelles de stockage privé
+        }
+      }
+
+      const state = {
+        currentPage: 'mobs',
+        subFilter: 'Tous',
+        searchQuery: '',
+        favorites: loadFavorites(),
+        activeModalId: null,
+        lastRandomWorldId: null
+      };
+
+      /* =====================================================================
+         4. UTILITAIRES DE RECHERCHE & FILTRAGE INTELLIGENT
+         ===================================================================== */
+
+      /** Normalise une chaîne (minuscules + suppression des accents) pour une recherche tolérante */
+      function normalizeText(str) {
+        return String(str || '')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '');
+      }
+
+      /** Construit l'index textuel complet d'un élément (nom, faiblesses, butins, enchantements, etc.) */
+      const SEARCH_INDEX = new Map();
+      DATABASE.forEach(item => {
+        const blob = [
+          item.name,
+          item.subCategory,
+          item.badgeText,
+          item.summary,
+          item.spawn,
+          item.drops,
+          item.obtain,
+          item.gear,
+          item.tip,
+          ...(item.strengths || []),
+          ...(item.weaknesses || []),
+          ...(item.resources || []),
+          ...(item.mobsPresent || []),
+          ...(item.enchantments || []),
+          ...(item.tags || [])
+        ].join(' ');
+        SEARCH_INDEX.set(item.id, normalizeText(blob));
+      });
+
+      /** Vérifie si un élément correspond à la recherche textuelle en cours */
+      function matchesSearch(item, query) {
+        if (!query) return true;
+        const normalizedQuery = normalizeText(query).trim();
+        if (!normalizedQuery) return true;
+        const terms = normalizedQuery.split(/\s+/);
+        const haystack = SEARCH_INDEX.get(item.id) || '';
+        return terms.every(term => haystack.includes(term));
+      }
+
+      /** Retourne les éléments filtrés pour une page donnée */
+      function getFilteredItems(page, subFilter, query) {
+        return DATABASE.filter(item => {
+          if (item.page !== page) return false;
+          if (!matchesSearch(item, query)) return false;
+
+          if (subFilter === '⭐ Favoris') {
+            return state.favorites.has(item.id);
+          }
+          if (subFilter && subFilter !== 'Tous' && subFilter !== 'Toutes') {
+            return item.subCategory === subFilter;
+          }
+          return true;
+        });
+      }
+
+      /** Compte les correspondances de recherche par page (sans tenir compte du sous-filtre) */
+      function getPageSearchCounts(query) {
+        const counts = { mobs: 0, worlds: 0, weapons: 0 };
+        DATABASE.forEach(item => {
+          if (matchesSearch(item, query)) {
+            counts[item.page]++;
+          }
+        });
+        return counts;
+      }
+
+      /* =====================================================================
+         5. RÉFÉRENCES DOM & NOTIFICATIONS TOAST
+         ===================================================================== */
+
+      const els = {
+        searchInput: document.getElementById('search-input'),
+        clearSearchBtn: document.getElementById('clear-search-btn'),
+        navTabs: document.querySelectorAll('.nav-tab'),
+        pageTitle: document.getElementById('page-title'),
+        pageSubtitle: document.getElementById('page-subtitle'),
+        subfilterBar: document.getElementById('subfilter-bar'),
+        visibleCount: document.getElementById('visible-count'),
+        visibleLabel: document.getElementById('visible-label'),
+        cardsGrid: document.getElementById('cards-grid'),
+        emptyState: document.getElementById('empty-state'),
+        emptyStateMsg: document.getElementById('empty-state-msg'),
+        emptyStateActions: document.getElementById('empty-state-actions'),
+        crossBanner: document.getElementById('cross-search-banner'),
+        crossText: document.getElementById('cross-search-text'),
+        crossButtons: document.getElementById('cross-search-buttons'),
+        biomeSection: document.getElementById('biome-generator-section'),
+        biomeBtn: document.getElementById('biome-btn'),
+        biomeOpenFicheBtn: document.getElementById('biome-open-fiche-btn'),
+        biomePreviewWrap: document.getElementById('biome-preview-wrap'),
+        biomeResultTitle: document.getElementById('biome-result-title'),
+        biomeResultMission: document.getElementById('biome-result-mission'),
+        biomeResultMeta: document.getElementById('biome-result-meta'),
+        globalFavCount: document.getElementById('global-fav-count'),
+        headerFavToggle: document.getElementById('header-fav-toggle'),
+        modal: document.getElementById('detail-modal'),
+        modalDialog: document.getElementById('modal-dialog'),
+        modalBody: document.getElementById('modal-body'),
+        modalCategoryPill: document.getElementById('modal-category-pill'),
+        modalSubPill: document.getElementById('modal-sub-pill'),
+        modalFavBtn: document.getElementById('modal-fav-btn'),
+        modalFavIcon: document.getElementById('modal-fav-icon'),
+        modalFavText: document.getElementById('modal-fav-text'),
+        modalCopyBtn: document.getElementById('modal-copy-btn'),
+        modalCloseBtn: document.getElementById('modal-close-btn'),
+        toast: document.getElementById('toast'),
+        toastMessage: document.getElementById('toast-message')
+      };
+
+      let toastTimer = null;
+      function showToast(message) {
+        els.toastMessage.textContent = message;
+        els.toast.classList.remove('opacity-0', 'translate-y-3');
+        els.toast.classList.add('opacity-100', 'translate-y-0');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          els.toast.classList.add('opacity-0', 'translate-y-3');
+          els.toast.classList.remove('opacity-100', 'translate-y-0');
+        }, 2300);
+      }
+
+      /* =====================================================================
+         6. RENDU DES CARTES, ONGLET ACTIF, SOUS-FILTRES & BANNIÈRE INTER-PAGES
+         ===================================================================== */
+
+      function updateNavTabs() {
+        const counts = getPageSearchCounts(state.searchQuery);
+        const hasSearch = state.searchQuery.trim().length > 0;
+
+        els.navTabs.forEach(tab => {
+          const page = tab.dataset.page;
+          const isActive = page === state.currentPage;
+          const count = counts[page];
+          const badge = tab.querySelector('.tab-count');
+
+          tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+
+          // Style actif vs inactif
+          if (isActive) {
+            tab.className = 'nav-tab mc-btn flex items-center justify-center sm:justify-between gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border-2 border-mc-xp bg-mc-xp text-black font-pixel text-[10px] sm:text-xs cursor-pointer';
+            badge.className = 'tab-count px-2 py-0.5 rounded-md text-[10px] font-sans font-extrabold bg-black/25 text-black';
+          } else {
+            const highlightOther = hasSearch && count > 0;
+            tab.className = `nav-tab mc-btn flex items-center justify-center sm:justify-between gap-2 px-2.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border-2 ${
+              highlightOther
+                ? 'border-mc-diamond bg-[#182633] text-white'
+                : 'border-[#333342] bg-[#1d1d26] hover:bg-[#262633] text-slate-200'
+            } font-pixel text-[10px] sm:text-xs cursor-pointer`;
+            badge.className = `tab-count px-2 py-0.5 rounded-md text-[10px] font-sans font-bold ${
+              highlightOther
+                ? 'bg-mc-diamond text-black'
+                : 'bg-black/40 text-slate-300'
+            }`;
+          }
+
+          if (badge) badge.textContent = count;
+        });
+
+        // Bannière inter-catégories si recherche active avec résultats dans d'autres pages
+        if (hasSearch) {
+          const otherMatches = Object.entries(counts)
+            .filter(([p, c]) => p !== state.currentPage && c > 0);
+
+          if (otherMatches.length > 0) {
+            const currentMatches = counts[state.currentPage];
+            els.crossText.textContent = currentMatches === 0
+              ? `Aucun résultat ici, mais "${state.searchQuery.trim()}" correspond dans :`
+              : `Également trouvé dans d'autres pages :`;
+
+            const labels = { mobs: '⚔️ Mobs', worlds: '🌍 Mondes', weapons: '🗡️ Armes' };
+            els.crossButtons.innerHTML = otherMatches.map(([p, c]) => `
+              <button
+                type="button"
+                data-jump-page="${p}"
+                class="mc-btn px-3 py-1.5 rounded-lg bg-mc-diamond/20 hover:bg-mc-diamond hover:text-black border border-mc-diamond/60 text-mc-diamond font-pixel text-[10px] cursor-pointer transition"
+              >
+                ${labels[p]} (${c}) →
+              </button>
+            `).join('');
+
+            els.crossBanner.classList.remove('hidden');
+          } else {
+            els.crossBanner.classList.add('hidden');
+          }
+        } else {
+          els.crossBanner.classList.add('hidden');
+        }
+      }
+
+      function renderSubFilters() {
+        const cfg = PAGE_CONFIG[state.currentPage];
+        const pageFavCount = DATABASE.filter(i => i.page === state.currentPage && state.favorites.has(i.id)).length;
+
+        els.subfilterBar.innerHTML = cfg.filters.map(filter => {
+          const active = state.subFilter === filter;
+          const isFav = filter === '⭐ Favoris';
+          const label = isFav ? `⭐ Favoris (${pageFavCount})` : filter;
+
+          const activeClasses = isFav
+            ? 'bg-mc-xp text-black border-mc-xp font-bold'
+            : 'bg-mc-emerald text-white border-mc-emerald font-bold';
+          const idleClasses = 'bg-[#14141b] hover:bg-[#23232f] text-slate-300 border-[#313140] font-medium';
+
+          return `
+            <button
+              type="button"
+              data-subfilter="${filter}"
+              class="px-3.5 py-2 rounded-xl border-2 text-xs sm:text-sm cursor-pointer transition ${active ? activeClasses : idleClasses}"
+            >
+              ${label}
+            </button>
+          `;
+        }).join('');
+      }
+
+      /** Crée le HTML d'une carte (Mob, Monde ou Arme) */
+      function createCardHTML(item, idx) {
+        const isFav = state.favorites.has(item.id);
+        const imgSrc = PIXEL_IMAGES[item.imageKey];
+        const mainWeakness = item.weaknesses[0] || '';
+
+        // 2 stats rapides adaptées à la catégorie
+        let quickStatsHTML = '';
+        if (item.page === 'mobs') {
+          quickStatsHTML = `
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="rounded-lg bg-[#111116] border border-[#272733] px-2.5 py-1.5">
+                <div class="text-[10px] text-slate-400">Santé</div>
+                <div class="font-bold text-rose-400 truncate">${item.stats.hpLabel}</div>
+              </div>
+              <div class="rounded-lg bg-[#111116] border border-[#272733] px-2.5 py-1.5">
+                <div class="text-[10px] text-slate-400">Danger</div>
+                <div class="font-bold text-mc-xp truncate">${item.stats.danger} / 5</div>
+              </div>
+            </div>
+          `;
+        } else if (item.page === 'worlds') {
+          quickStatsHTML = `
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="rounded-lg bg-[#111116] border border-[#272733] px-2.5 py-1.5">
+                <div class="text-[10px] text-slate-400">Danger</div>
+                <div class="font-bold text-mc-danger truncate">${item.stats.danger} / 5</div>
+              </div>
+              <div class="rounded-lg bg-[#111116] border border-[#272733] px-2.5 py-1.5">
+                <div class="text-[10px] text-slate-400">Richesse</div>
+                <div class="font-bold text-mc-diamond truncate">${item.stats.richesLabel}</div>
+              </div>
+            </div>
+          `;
+        } else {
+          quickStatsHTML = `
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="rounded-lg bg-[#111116] border border-[#272733] px-2.5 py-1.5">
+                <div class="text-[10px] text-slate-400">Dégâts</div>
+                <div class="font-bold text-mc-xp truncate">${item.stats.damage}</div>
+              </div>
+              <div class="rounded-lg bg-[#111116] border border-[#272733] px-2.5 py-1.5">
+                <div class="text-[10px] text-slate-400">Durabilité</div>
+                <div class="font-bold text-mc-diamond truncate">${item.stats.durability}</div>
+              </div>
+            </div>
+          `;
+        }
+
+        const weaknessTitle = item.page === 'worlds' ? '⚠️ Danger clé' : '⚠️ Faiblesse clé';
+
+        return `
+          <article
+            class="mc-card animate-card rounded-2xl overflow-hidden flex flex-col cursor-pointer group"
+            style="animation-delay: ${Math.min(idx * 35, 280)}ms"
+            data-open-modal="${item.id}"
+            tabindex="0"
+            role="button"
+            aria-label="Ouvrir la fiche complète de ${item.name}"
+          >
+            <!-- Zone visuelle pixel-art -->
+            <div class="relative h-48 bg-[#0e0e13] border-b-2 border-[#272733] overflow-hidden flex items-center justify-center">
+              <img
+                src="${imgSrc}"
+                alt="Illustration pixel-art de ${item.name}"
+                class="pixel-art w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              >
+              <!-- Badge catégorie -->
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg font-pixel text-[9px] shadow-md ${item.badgeColor}">
+                ${item.badgeText}
+              </span>
+              <!-- Bouton Favori -->
+              <button
+                type="button"
+                data-toggle-fav="${item.id}"
+                class="absolute top-2.5 right-2.5 w-9 h-9 rounded-xl flex items-center justify-center border-2 transition cursor-pointer ${
+                  isFav
+                    ? 'bg-mc-xp/90 border-yellow-200 text-black shadow-lg'
+                    : 'bg-black/60 hover:bg-black/85 border-white/15 text-slate-200'
+                }"
+                aria-label="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}"
+                title="${isFav ? 'Retirer des favoris' : 'Ajouter aux favoris'}"
+              >
+                <span class="text-base leading-none">${isFav ? '★' : '☆'}</span>
+              </button>
+            </div>
+
+            <!-- Contenu de la carte -->
+            <div class="p-4 flex-1 flex flex-col gap-3">
+              <div>
+                <h3 class="font-pixel text-xs sm:text-sm text-mc-xp group-hover:text-yellow-300 transition leading-snug">
+                  ${item.name}
+                </h3>
+                <p class="text-slate-300 text-xs sm:text-sm mt-1.5 line-clamp-2 leading-relaxed">
+                  ${item.summary}
+                </p>
+              </div>
+
+              ${quickStatsHTML}
+
+              <!-- Faiblesse principale mise en avant -->
+              <div class="rounded-xl bg-mc-danger/10 border border-mc-danger/30 px-3 py-2 text-xs text-red-200 leading-snug mt-auto">
+                <span class="font-bold text-red-400 block text-[11px] mb-0.5">${weaknessTitle}</span>
+                <span class="line-clamp-2">${mainWeakness}</span>
+              </div>
+
+              <div class="flex items-center justify-between pt-1 border-t border-white/5 text-xs">
+                <span class="text-slate-400 font-medium">${item.subCategory}</span>
+                <span class="font-semibold text-mc-emerald group-hover:translate-x-1 transition-transform">
+                  Voir la fiche →
+                </span>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      /** Fonction principale de rafraîchissement de l'interface */
+      function renderApp() {
+        const cfg = PAGE_CONFIG[state.currentPage];
+
+        // Titre et description de la page active
+        els.pageTitle.textContent = cfg.title;
+        els.pageSubtitle.textContent = cfg.subtitle;
+
+        // Affiche le générateur de biome uniquement sur la page Mondes
+        if (state.currentPage === 'worlds') {
+          els.biomeSection.classList.remove('hidden');
+        } else {
+          els.biomeSection.classList.add('hidden');
+        }
+
+        // Compteur global des favoris
+        els.globalFavCount.textContent = state.favorites.size;
+
+        // Bouton effacer recherche
+        if (state.searchQuery.trim().length > 0) {
+          els.clearSearchBtn.classList.remove('hidden');
+        } else {
+          els.clearSearchBtn.classList.add('hidden');
+        }
+
+        updateNavTabs();
+        renderSubFilters();
+
+        // Filtrage des fiches à afficher
+        const items = getFilteredItems(state.currentPage, state.subFilter, state.searchQuery);
+        els.visibleCount.textContent = items.length;
+        els.visibleLabel.textContent = items.length > 1 ? cfg.unit : cfg.unit.replace(/s$/, '');
+
+        if (items.length === 0) {
+          els.cardsGrid.innerHTML = '';
+          els.emptyState.classList.remove('hidden');
+
+          const actions = [];
+          if (state.subFilter === '⭐ Favoris') {
+            els.emptyStateMsg.textContent = 'Tu n’as encore aucun favori dans cette catégorie. Clique sur l’étoile ☆ d’une fiche pour la sauvegarder !';
+          } else if (state.searchQuery.trim()) {
+            els.emptyStateMsg.textContent = `Aucun élément trouvé pour "${state.searchQuery.trim()}" dans ${cfg.title}.`;
+          } else {
+            els.emptyStateMsg.textContent = 'Aucune fiche ne correspond aux filtres actuels.';
+          }
+
+          if (state.searchQuery.trim()) {
+            actions.push(`<button type="button" id="reset-search-empty" class="mc-btn px-4 py-2.5 rounded-xl bg-mc-emerald text-white font-pixel text-[10px] cursor-pointer">Effacer la recherche</button>`);
+          }
+          if (state.subFilter !== 'Tous' && state.subFilter !== 'Toutes') {
+            actions.push(`<button type="button" id="reset-filter-empty" class="mc-btn px-4 py-2.5 rounded-xl bg-[#272736] border border-[#3e3e52] text-slate-200 font-pixel text-[10px] cursor-pointer">Afficher tout</button>`);
+          }
+          els.emptyStateActions.innerHTML = actions.join('');
+        } else {
+          els.emptyState.classList.add('hidden');
+          els.cardsGrid.innerHTML = items.map((item, idx) => createCardHTML(item, idx)).join('');
+        }
+      }
+
+      /* =====================================================================
+         7. MODALE DÉTAILLÉE STYLE INVENTAIRE MINECRAFT
+         ===================================================================== */
+
+      function renderStatBar(label, valueText, percent, barColor) {
+        const clamped = Math.max(6, Math.min(100, Number(percent) || 0));
+        return `
+          <div class="space-y-1">
+            <div class="flex items-center justify-between text-xs gap-2">
+              <span class="text-slate-400 font-medium">${label}</span>
+              <span class="font-bold text-white text-right">${valueText}</span>
+            </div>
+            <div class="w-full h-2.5 rounded-full bg-[#101016] border border-[#2a2a38] overflow-hidden">
+              <div class="stat-fill h-full rounded-full ${barColor}" style="width: ${clamped}%"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      function openModal(itemId) {
+        const item = DATABASE.find(i => i.id === itemId);
+        if (!item) return;
+
+        state.activeModalId = itemId;
+        const imgSrc = PIXEL_IMAGES[item.imageKey];
+
+        // En-tête de modale
+        els.modalCategoryPill.className = `px-2.5 py-1 rounded-md font-pixel text-[9px] uppercase ${item.badgeColor}`;
+        els.modalCategoryPill.textContent = item.badgeText;
+        els.modalSubPill.textContent = `${PAGE_CONFIG[item.page].title} • ${item.subCategory}`;
+        updateModalFavButton();
+
+        // Blocs spécifiques selon Mob / Monde / Arme
+        let statsBlock = '';
+        let strengthsTitle = '💪 Forces & Capacités';
+        let weaknessesTitle = '⚠️ Faiblesses & Contres';
+        let extraBlocks = '';
+
+        if (item.page === 'mobs') {
+          statsBlock = `
+            ${renderStatBar('Points de vie', item.stats.hpLabel, item.stats.hpPercent, 'bg-gradient-to-r from-rose-600 to-rose-400')}
+            ${renderStatBar('Dégâts infligés', item.stats.damage, item.stats.damagePercent, 'bg-gradient-to-r from-orange-600 to-amber-400')}
+            ${renderStatBar('Niveau de danger', item.stats.dangerLabel, (item.stats.danger / 5) * 100, 'bg-gradient-to-r from-red-600 to-yellow-400')}
+          `;
+          extraBlocks = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl bg-[#13131a] border-2 border-[#2a2a38] p-4">
+                <h4 class="font-pixel text-[10px] text-mc-diamond mb-2">📍 Apparition &amp; Dimension</h4>
+                <p class="text-sm text-slate-200 leading-relaxed">${item.spawn}</p>
+              </div>
+              <div class="rounded-xl bg-[#13131a] border-2 border-[#2a2a38] p-4">
+                <h4 class="font-pixel text-[10px] text-mc-xp mb-2">💎 Butins (Drops) &amp; XP</h4>
+                <p class="text-sm text-slate-200 leading-relaxed">${item.drops}</p>
+              </div>
+            </div>
+          `;
+        } else if (item.page === 'worlds') {
+          strengthsTitle = '💎 Ressources Clés';
+          weaknessesTitle = '⚠️ Dangers, Pièges & Faiblesses du joueur';
+          statsBlock = `
+            ${renderStatBar('Niveau de danger', item.stats.dangerLabel, item.stats.dangerPercent, 'bg-gradient-to-r from-red-600 to-amber-400')}
+            ${renderStatBar('Richesse en ressources', item.stats.richesLabel, item.stats.richesPercent, 'bg-gradient-to-r from-cyan-600 to-mc-diamond')}
+            ${renderStatBar('Hostilité ambiante', item.stats.hostility, item.stats.hostilityPercent, 'bg-gradient-to-r from-purple-600 to-fuchsia-400')}
+          `;
+          extraBlocks = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl bg-[#13131a] border-2 border-[#2a2a38] p-4">
+                <h4 class="font-pixel text-[10px] text-mc-xp mb-2.5">👾 Mobs présents</h4>
+                <div class="flex flex-wrap gap-1.5">
+                  ${item.mobsPresent.map(m => `<span class="px-2.5 py-1 rounded-lg bg-[#222230] border border-[#353548] text-xs text-slate-200 font-medium">${m}</span>`).join('')}
+                </div>
+              </div>
+              <div class="rounded-xl bg-[#13131a] border-2 border-[#2a2a38] p-4">
+                <h4 class="font-pixel text-[10px] text-mc-emerald mb-2">🎒 Équipement recommandé</h4>
+                <p class="text-sm text-slate-200 leading-relaxed">${item.gear}</p>
+              </div>
+            </div>
+          `;
+        } else {
+          strengthsTitle = '⚡ Forces & Atouts';
+          weaknessesTitle = '⚠️ Faiblesses & Limites';
+          statsBlock = `
+            ${renderStatBar('Dégâts', item.stats.damage, item.stats.damagePercent, 'bg-gradient-to-r from-amber-600 to-yellow-400')}
+            ${renderStatBar("Vitesse d'attaque", item.stats.speed, item.stats.speedPercent, 'bg-gradient-to-r from-emerald-600 to-green-400')}
+            ${renderStatBar('Durabilité', item.stats.durability, item.stats.durabilityPercent, 'bg-gradient-to-r from-cyan-600 to-mc-diamond')}
+          `;
+          extraBlocks = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="rounded-xl bg-[#13131a] border-2 border-[#2a2a38] p-4">
+                <h4 class="font-pixel text-[10px] text-mc-xp mb-2">🛠️ Obtention &amp; Craft</h4>
+                <p class="text-sm text-slate-200 leading-relaxed">${item.obtain}</p>
+              </div>
+              <div class="rounded-xl bg-[#13131a] border-2 border-purple-500/35 p-4">
+                <h4 class="font-pixel text-[10px] text-purple-300 mb-2.5">✨ Meilleurs enchantements</h4>
+                <div class="flex flex-wrap gap-1.5">
+                  ${item.enchantments.map(e => `<span class="enchant-pill px-2.5 py-1 rounded-lg text-xs font-semibold">${e}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        const positiveList = item.page === 'worlds' ? item.resources : item.strengths;
+
+        els.modalBody.innerHTML = `
+          <!-- En-tête fiche : Image pixel-art + Résumé + Stats -->
+          <div class="flex flex-col sm:flex-row gap-5">
+            <div class="w-full sm:w-48 h-48 rounded-2xl overflow-hidden border-3 border-[#3b3b4e] bg-[#0f0f15] shrink-0 shadow-lg">
+              <img
+                src="${imgSrc}"
+                alt="Illustration pixel-art de ${item.name}"
+                class="pixel-art w-full h-full object-cover"
+              >
+            </div>
+            <div class="flex-1 space-y-3.5 min-w-0">
+              <div>
+                <h3 id="modal-title" class="font-pixel text-base sm:text-xl text-mc-xp pixel-shadow-sm leading-snug">
+                  ${item.name}
+                </h3>
+                <p class="text-slate-300 text-sm mt-2 leading-relaxed">
+                  ${item.summary}
+                </p>
+              </div>
+              <div class="rounded-xl bg-[#13131a] border border-[#2a2a38] p-3.5 space-y-2.5">
+                ${statsBlock}
+              </div>
+            </div>
+          </div>
+
+          <!-- Forces vs Faiblesses (bien mis en évidence) -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-xl bg-mc-emerald/10 border-2 border-mc-emerald/40 p-4">
+              <h4 class="font-pixel text-[10px] text-mc-emerald mb-3">${strengthsTitle}</h4>
+              <ul class="space-y-2 text-sm text-slate-200">
+                ${positiveList.map(line => `
+                  <li class="flex items-start gap-2 leading-snug">
+                    <span class="text-mc-emerald font-bold mt-0.5">▸</span>
+                    <span>${line}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+
+            <div class="rounded-xl bg-mc-danger/10 border-2 border-mc-danger/45 p-4">
+              <h4 class="font-pixel text-[10px] text-red-400 mb-3">${weaknessesTitle}</h4>
+              <ul class="space-y-2 text-sm text-red-100">
+                ${item.weaknesses.map(line => `
+                  <li class="flex items-start gap-2 leading-snug">
+                    <span class="text-red-400 font-bold mt-0.5">✕</span>
+                    <span>${line}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Informations complémentaires -->
+          ${extraBlocks}
+
+          <!-- Astuce Pro -->
+          <div class="rounded-xl bg-gradient-to-r from-mc-xp/15 via-amber-500/10 to-transparent border-2 border-mc-xp/40 p-4 flex items-start gap-3">
+            <span class="text-2xl leading-none shrink-0">💡</span>
+            <div>
+              <h4 class="font-pixel text-[10px] text-mc-xp mb-1">
+                ${item.page === 'worlds' ? "Conseil d'exploration" : item.page === 'weapons' ? 'Astuce de combat' : 'Astuce de survie'}
+              </h4>
+              <p class="text-sm text-amber-100 leading-relaxed">${item.tip}</p>
+            </div>
+          </div>
+        `;
+
+        els.modal.classList.remove('hidden');
+        els.modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        els.modalCloseBtn.focus();
+      }
+
+      function closeModal() {
+        state.activeModalId = null;
+        els.modal.classList.add('hidden');
+        els.modal.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+
+      function updateModalFavButton() {
+        if (!state.activeModalId) return;
+        const isFav = state.favorites.has(state.activeModalId);
+        els.modalFavIcon.textContent = isFav ? '★' : '☆';
+        els.modalFavText.textContent = isFav ? 'Favori' : 'Ajouter';
+        els.modalFavBtn.className = isFav
+          ? 'mc-btn px-3 py-1.5 rounded-lg bg-mc-xp text-black border border-yellow-200 text-sm font-bold cursor-pointer flex items-center gap-1.5'
+          : 'mc-btn px-3 py-1.5 rounded-lg bg-[#252532] hover:bg-[#323244] border border-[#3e3e52] text-slate-200 text-sm font-semibold cursor-pointer flex items-center gap-1.5';
+      }
+
+      function toggleFavorite(itemId) {
+        const item = DATABASE.find(i => i.id === itemId);
+        if (!item) return;
+
+        if (state.favorites.has(itemId)) {
+          state.favorites.delete(itemId);
+          showToast(`"${item.name}" retiré des favoris`);
+        } else {
+          state.favorites.add(itemId);
+          showToast(`"${item.name}" ajouté aux favoris ⭐`);
+        }
+        saveFavorites(state.favorites);
+        updateModalFavButton();
+        renderApp();
+      }
+
+      /** Copie la fiche résumée via document.execCommand('copy') compatible iFrame */
+      function copyCurrentModalSummary() {
+        const item = DATABASE.find(i => i.id === state.activeModalId);
+        if (!item) return;
+
+        const text = [
+          `📘 ${item.name} (${item.badgeText})`,
+          item.summary,
+          `⚠️ Faiblesse principale : ${item.weaknesses[0]}`,
+          `💡 Astuce : ${item.tip}`
+        ].join('\n');
+
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast(`Fiche "${item.name}" copiée !`);
+        } catch (err) {
+          showToast('Impossible de copier automatiquement.');
+        }
+      }
+
+      /* =====================================================================
+         8. GÉNÉRATEUR ALÉATOIRE DE BIOME (AMÉLIORÉ AVEC ANIMATION & FICHE)
+         ===================================================================== */
+
+      let biomeSpinning = false;
+      function rollRandomBiome() {
+        if (biomeSpinning) return;
+        const worlds = DATABASE.filter(i => i.page === 'worlds');
+        if (worlds.length === 0) return;
+
+        biomeSpinning = true;
+        els.biomeBtn.disabled = true;
+        els.biomeBtn.classList.add('opacity-70');
+
+        let ticks = 0;
+        const maxTicks = 7;
+
+        const interval = setInterval(() => {
+          const candidate = worlds[Math.floor(Math.random() * worlds.length)];
+          els.biomePreviewWrap.innerHTML = `<img src="${PIXEL_IMAGES[candidate.imageKey]}" alt="${candidate.name}" class="pixel-art w-full h-full object-cover">`;
+          els.biomeResultTitle.textContent = candidate.name;
+          ticks++;
+
+          if (ticks >= maxTicks) {
+            clearInterval(interval);
+            // Évite de retomber deux fois de suite sur le même biome
+            let chosen = worlds[Math.floor(Math.random() * worlds.length)];
+            if (worlds.length > 1 && chosen.id === state.lastRandomWorldId) {
+              chosen = worlds[(worlds.indexOf(chosen) + 1) % worlds.length];
+            }
+            state.lastRandomWorldId = chosen.id;
+
+            els.biomePreviewWrap.innerHTML = `<img src="${PIXEL_IMAGES[chosen.imageKey]}" alt="${chosen.name}" class="pixel-art w-full h-full object-cover">`;
+            els.biomeResultTitle.textContent = chosen.name;
+            els.biomeResultMission.textContent = `🎯 Défi : ${chosen.mission}`;
+            els.biomeResultMeta.textContent = `Danger : ${chosen.stats.dangerLabel} • ${chosen.subCategory}`;
+            els.biomeResultMeta.classList.remove('hidden');
+            els.biomeOpenFicheBtn.classList.remove('hidden');
+
+            biomeSpinning = false;
+            els.biomeBtn.disabled = false;
+            els.biomeBtn.classList.remove('opacity-70');
+          }
+        }, 65);
+      }
+
+      /* =====================================================================
+         9. ÉCOUTEURS D'ÉVÉNEMENTS (CLIC, CLAVIER, RECHERCHE, NAVIGATION)
+         ===================================================================== */
+
+      function switchPage(page, keepSubFilter = false) {
+        if (!PAGE_CONFIG[page]) return;
+        state.currentPage = page;
+        if (!keepSubFilter) {
+          state.subFilter = PAGE_CONFIG[page].filters[0];
+        }
+        renderApp();
+      }
+
+      // Navigation entre les 3 pages
+      els.navTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          switchPage(tab.dataset.page);
+        });
+      });
+
+      // Recherche en temps réel
+      els.searchInput.addEventListener('input', e => {
+        state.searchQuery = e.target.value;
+        renderApp();
+        Suggest.update();
+      });
+
+      // Bouton Effacer la recherche
+      els.clearSearchBtn.addEventListener('click', () => {
+        state.searchQuery = '';
+        els.searchInput.value = '';
+        els.searchInput.focus();
+        Suggest.hide();
+        renderApp();
+      });
+
+      // Bouton Favoris dans le header (bascule le filtre Favoris sur la page courante)
+      els.headerFavToggle.addEventListener('click', () => {
+        if (state.subFilter === '⭐ Favoris') {
+          state.subFilter = PAGE_CONFIG[state.currentPage].filters[0];
+        } else {
+          state.subFilter = '⭐ Favoris';
+        }
+        renderApp();
+      });
+
+      // Clics délégués sur la bannière de résultats inter-catégories
+      els.crossButtons.addEventListener('click', e => {
+        const btn = e.target.closest('[data-jump-page]');
+        if (btn) {
+          switchPage(btn.dataset.jumpPage);
+        }
+      });
+
+      // Clics délégués sur les sous-filtres
+      els.subfilterBar.addEventListener('click', e => {
+        const btn = e.target.closest('[data-subfilter]');
+        if (!btn) return;
+        state.subFilter = btn.dataset.subfilter;
+        renderApp();
+      });
+
+      // Clics délégués sur la grille de cartes (ouverture modale ou bouton favori)
+      els.cardsGrid.addEventListener('click', e => {
+        const favBtn = e.target.closest('[data-toggle-fav]');
+        if (favBtn) {
+          e.stopPropagation();
+          toggleFavorite(favBtn.dataset.toggleFav);
+          return;
+        }
+        const card = e.target.closest('[data-open-modal]');
+        if (card) {
+          openModal(card.dataset.openModal);
+        }
+      });
+
+      // Accessibilité clavier sur les cartes (Entrée / Espace)
+      els.cardsGrid.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const card = e.target.closest('[data-open-modal]');
+          if (card && !e.target.closest('button')) {
+            e.preventDefault();
+            openModal(card.dataset.openModal);
+          }
+        }
+      });
+
+      // Actions de l'état vide
+      els.emptyStateActions.addEventListener('click', e => {
+        if (e.target.id === 'reset-search-empty') {
+          state.searchQuery = '';
+          els.searchInput.value = '';
+          renderApp();
+        } else if (e.target.id === 'reset-filter-empty') {
+          state.subFilter = PAGE_CONFIG[state.currentPage].filters[0];
+          renderApp();
+        }
+      });
+
+      // Générateur aléatoire de biomes
+      els.biomeBtn.addEventListener('click', rollRandomBiome);
+      els.biomeOpenFicheBtn.addEventListener('click', () => {
+        if (state.lastRandomWorldId) {
+          openModal(state.lastRandomWorldId);
+        }
+      });
+
+      // Contrôles de la modale
+      els.modalCloseBtn.addEventListener('click', closeModal);
+      els.modalFavBtn.addEventListener('click', () => {
+        if (state.activeModalId) toggleFavorite(state.activeModalId);
+      });
+      els.modalCopyBtn.addEventListener('click', copyCurrentModalSummary);
+      els.modal.addEventListener('click', e => {
+        if (e.target === els.modal) closeModal();
+      });
+
+      // Raccourcis clavier globaux : '/' pour chercher, 'Échap' pour fermer la modale
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && state.activeModalId) {
+          closeModal();
+          return;
+        }
+        if (e.key === '/' && document.activeElement !== els.searchInput && !state.activeModalId) {
+          e.preventDefault();
+          els.searchInput.focus();
+        }
+      });
+
+      /* =====================================================================
+         v2 — EXTENSIONS : AUTOCOMPLÉTION, ANIMATIONS & MINI-JEU
+         ===================================================================== */
+
+      /* ------------------------------------------------------------------
+         1. AUTOCOMPLÉTION type Google
+         ------------------------------------------------------------------ */
+      const Suggest = (() => {
+        const box = document.getElementById('search-suggest');
+        const input = document.getElementById('search-input');
+        const PAGE_META = {
+          mobs: { icon: '⚔️', label: 'Mob' },
+          worlds: { icon: '🌍', label: 'Monde' },
+          weapons: { icon: '🗡️', label: 'Arme' }
+        };
+
+        const norm = s => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+
+        const escapeHTML = s => s
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+        const TERMS = new Map();
+        DATABASE.forEach(it => {
+          const meta = PAGE_META[it.page];
+          const shortName = it.name.replace(/^(Le |La |Les |L’|L'|Un |Une |De |Du )/, '');
+          TERMS.set(norm(shortName), { q: it.name, icon: meta.icon, pill: meta.label });
+          TERMS.set(norm(it.name), { q: it.name, icon: meta.icon, pill: meta.label });
+          it.tags.forEach(tag => {
+            if (!TERMS.has(norm(tag))) {
+              TERMS.set(norm(tag), { q: tag, icon: '🔎', pill: 'Mot-clé' });
+            }
+          });
+        });
+
+        let items = [];
+        let activeIdx = -1;
+
+        function findMatches(query) {
+          const q = norm(query);
+          if (!q) return [];
+          const scored = [];
+          TERMS.forEach((data, term) => {
+            let score = -1;
+            if (term.startsWith(q)) score = 0;
+            else if (term.split(/[\s-]+/).some(w => w.startsWith(q))) score = 1;
+            else if (term.includes(q)) score = 2;
+            if (score >= 0) scored.push({ score, term, data });
+          });
+          scored.sort((a, b) => a.score - b.score || a.term.length - b.term.length || a.term.localeCompare(b.term));
+          const seen = new Set();
+          const out = [];
+          for (const s of scored) {
+            const key = norm(s.data.q);
+            if (seen.has(key)) continue;
+            seen.add(key);
+            out.push(s);
+            if (out.length >= 7) break;
+          }
+          return out;
+        }
+
+        function highlightLabel(label, query) {
+          const a = norm(label);
+          const q = norm(query);
+          const idx = a.indexOf(q);
+          if (idx < 0) return escapeHTML(label);
+          return escapeHTML(label.slice(0, idx))
+            + '<b>' + escapeHTML(label.slice(idx, idx + q.length)) + '</b>'
+            + escapeHTML(label.slice(idx + q.length));
+        }
+
+        function render() {
+          if (!items.length) { hide(); return; }
+          const q = input.value.trim();
+          const rows = items.map((it, i) => `
+            <button type="button" class="suggest-item ${i === activeIdx ? 'active' : ''}" data-sg-idx="${i}">
+              <span class="sg-icon">${it.icon}</span>
+              <span class="sg-label">${highlightLabel(it.label, q)}</span>
+              <span class="sg-pill">${it.pill}</span>
+            </button>
+          `).join('');
+          box.innerHTML = `
+            ${rows}
+            <div class="suggest-footer">
+              <span><kbd>\u2191</kbd> <kbd>\u2193</kbd> naviguer \u2022 <kbd>\u21B5</kbd> rechercher</span>
+              <span>\u2728 ${items.length} suggestion${items.length > 1 ? 's' : ''}</span>
+            </div>`;
+          box.classList.remove('hidden');
+          box.querySelectorAll('.suggest-item').forEach(el => {
+            el.addEventListener('mousedown', ev => {
+              ev.preventDefault();
+              apply(parseInt(el.dataset.sgIdx, 10));
+            });
+          });
+        }
+
+        function update() {
+          const q = input.value.trim();
+          if (q.length < 1) { hide(); return; }
+          items = findMatches(q).map(m => ({
+            label: m.data.q,
+            q: m.data.q,
+            icon: m.data.icon,
+            pill: m.data.pill
+          }));
+          activeIdx = -1;
+          render();
+        }
+
+        function apply(idx) {
+          const it = items[idx];
+          if (!it) return;
+          input.value = it.q;
+          state.searchQuery = it.q;
+          hide();
+          renderApp();
+          input.focus();
+          showToast('Recherche : ' + it.q);
+        }
+
+        function hide() {
+          box.classList.add('hidden');
+          activeIdx = -1;
+          items = [];
+        }
+
+        function move(delta) {
+          if (!items.length) return;
+          activeIdx = (activeIdx + delta + items.length) % items.length;
+          render();
+        }
+
+        input.addEventListener('keydown', e => {
+          if (box.classList.contains('hidden')) return;
+          if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
+          else if (e.key === 'Enter') { if (activeIdx >= 0) { e.preventDefault(); apply(activeIdx); } hide(); }
+          else if (e.key === 'Escape') { hide(); }
+        });
+
+        input.addEventListener('blur', () => setTimeout(hide, 140));
+        input.addEventListener('focus', () => { if (input.value.trim()) update(); });
+
+        return { update, hide };
+      })();
+
+      /* ------------------------------------------------------------------
+         2. LUCIOLES flottantes en fond de page
+         ------------------------------------------------------------------ */
+      (() => {
+        const canvas = document.createElement('canvas');
+        canvas.setAttribute('aria-hidden', 'true');
+        canvas.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;';
+        document.body.insertBefore(canvas, document.body.firstChild);
+        const ctx = canvas.getContext('2d');
+        let W, H;
+        const resize = () => {
+          W = canvas.width = window.innerWidth;
+          H = canvas.height = window.innerHeight;
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const COLORS = ['78,159,61', '243,156,18', '0,210,211'];
+        const flies = Array.from({ length: 34 }, () => ({
+          x: Math.random(), y: Math.random(),
+          dx: (Math.random() - 0.5) * 0.00012,
+          dy: (Math.random() - 0.5) * 0.00009,
+          size: 1 + Math.random() * 2.2,
+          color: COLORS[Math.floor(Math.random() * COLORS.length)],
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.4 + Math.random() * 0.9
+        }));
+
+        (function loop(now) {
+          ctx.clearRect(0, 0, W, H);
+          for (const f of flies) {
+            f.x += f.dx; f.y += f.dy;
+            if (f.x < 0 || f.x > 1) f.dx *= -1;
+            if (f.y < 0 || f.y > 1) f.dy *= -1;
+            const alpha = 0.14 + 0.20 * (0.5 + 0.5 * Math.sin(now * 0.001 * f.speed + f.phase));
+            const px = f.x * W, py = f.y * H;
+            const g = ctx.createRadialGradient(px, py, 0, px, py, f.size * 5);
+            g.addColorStop(0, 'rgba(' + f.color + ',' + alpha + ')');
+            g.addColorStop(1, 'rgba(' + f.color + ',0)');
+            ctx.fillStyle = g;
+            ctx.beginPath();
+            ctx.arc(px, py, f.size * 5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          requestAnimationFrame(loop);
+        })(0);
+      })();
+
+      /* ------------------------------------------------------------------
+         3. TILT 3D sur les cartes
+         ------------------------------------------------------------------ */
+      (() => {
+        if (!window.matchMedia || window.matchMedia("(hover: none)").matches) return;
+        const grid = document.getElementById('cards-grid');
+        grid.addEventListener('mousemove', e => {
+          const card = e.target.closest('.mc-card');
+          if (!card) return;
+          const r = card.getBoundingClientRect();
+          const rx = ((e.clientY - r.top) / r.height - 0.5) * -7;
+          const ry = ((e.clientX - r.left) / r.width - 0.5) * 7;
+          card.style.transform = 'translateY(-6px) perspective(700px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+        });
+        grid.addEventListener('mouseout', e => {
+          const card = e.target.closest('.mc-card');
+          if (card) card.style.transform = '';
+        });
+      })();
+      /* Initialisation au chargement */
+      renderApp();
+    })();
+  </script>
+</body>
+</html>
